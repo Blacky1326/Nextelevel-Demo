@@ -104,178 +104,163 @@
     </a>
   </section>
 
-  <section class="mt-10 text-center">quired>
+  <section class="mt-10 text-center">
     <!-- Turnier-Anmeldung Button -->
     <button onclick="document.getElementById('tournament-modal').style.display='flex'"
-      class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">k text-sm
-      font-medium">Rank:</label>
+      class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
       Turnier Anmeldung (Fragpunk)
-    </button>ext-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
+    </button>
   </section>
-  einen Rang</option>
+
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
     <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
-      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">Bronze 2">Bronze 2</option>
+      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium">Ingame Name:</label>
         <input type="text" id="username" name="username"
           class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
           required>
-      </div>="Silber 2">Silber 2</option>
-      <div class="mb-4">ion>
+      </div>
+      <div class="mb-4">
         <label for="rank" class="block text-sm font-medium">Rank:</label>
         <select id="rank" name="rank"
           class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
           required>
           <option value="" disabled selected>Wähle deinen Rang</option>
-          <!-- Bronze -->Gold 2">Gold 2</option>
+          <!-- Bronze -->
           <option value="Bronze 5">Bronze 5</option>
           <option value="Bronze 4">Bronze 4</option>
           <option value="Bronze 3">Bronze 3</option>
           <option value="Bronze 2">Bronze 2</option>
           <option value="Bronze 1">Bronze 1</option>
-          <!-- Silber -->latin 2">Platin 2</option>
+          <!-- Silber -->
           <option value="Silber 5">Silber 5</option>
           <option value="Silber 4">Silber 4</option>
           <option value="Silber 3">Silber 3</option>
           <option value="Silber 2">Silber 2</option>
           <option value="Silber 1">Silber 1</option>
-          <!-- Gold -->Diamant 2">Diamant 2</option>
-          <option value="Gold 5">Gold 5</option>n>
+          <!-- Gold -->
+          <option value="Gold 5">Gold 5</option>
           <option value="Gold 4">Gold 4</option>
           <option value="Gold 3">Gold 3</option>
           <option value="Gold 2">Gold 2</option>
           <option value="Gold 1">Gold 1</option>
-          <!-- Platin -->er 2">Master 2</option>
+          <!-- Platin -->
           <option value="Platin 5">Platin 5</option>
-          <option value="Platin 4">Platin 4</option>agmaster -->
-          <option value="Platin 3">Platin 3</option>ption value="Fragmaster">Fragmaster</option>
+          <option value="Platin 4">Platin 4</option>
+          <option value="Platin 3">Platin 3</option>
           <option value="Platin 2">Platin 2</option>
           <option value="Platin 1">Platin 1</option>
           <!-- Diamant -->
-          <option value="Diamant 5">Diamant 5</option>e="button"
-          onclick="document.getElementById('tournament-modal').style.display='none'"
-          <option value="Diamant 4">Diamant 4</option>bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4
-          rounded">
+          <option value="Diamant 5">Diamant 5</option>
+          <option value="Diamant 4">Diamant 4</option>
           <option value="Diamant 3">Diamant 3</option>
           <option value="Diamant 2">Diamant 2</option>
-          <option value="Diamant 1">Diamant 1</option>ype="submit" class="bg-purple-500 hover:bg-purple-600 text-white
-          font-bold py-2 px-4 rounded">
-          <!-- Master -->melden
-          <option value="Master 5">Master 5</option>utton>
-          <option value="Master 4">Master 4</option>div>
+          <option value="Diamant 1">Diamant 1</option>
+          <!-- Master -->
+          <option value="Master 5">Master 5</option>
+          <option value="Master 4">Master 4</option>
           <option value="Master 3">Master 3</option>
+          <option value="Master 2">Master 2</option>
+          <option value="Master 1">Master 1</option>
+          <!-- Fragmaster -->
+          <option value="Fragmaster">Fragmaster</option>
+        </select>
+      </div>
+      <div class="flex justify-end gap-4">
+        <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+          Abbrechen
+        </button>
+        <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+          Anmelden
+        </button>
+      </div>
     </form>
-    <option value="Master 2">Master 2</option>
-    <option value="Master 1">Master 1</option>
-    <!-- Fragmaster -->lass="mt-12 text-gray-500 text-sm">
-    <option value="Fragmaster">Fragmaster</option> &copy; 2025 Nextlevel-Network. All rights reserved.
-    </select>>
-  </div>
-  <div class="flex justify-end gap-4">
-    <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
-      class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-      Abbrechen
-    </button>users" },
-    <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">{ id:
-      "1327026998534737952", elementId: "mechabreak-users" },
-      Anmelden { id: "690916074773938236", elementId: "cod-users" },
-    </button>
-  </div>
-  </form> const totalUsersElement = document.getElementById("total-users");
   </div>
 
   <footer class="mt-12 text-gray-500 text-sm">
-    &copy; 2025 Nextlevel-Network. All rights reserved.ord.com/api/guilds/${server.id}/widget.json`)
+    &copy; 2025 Nextlevel-Network. All rights reserved.
   </footer>
 
   <script>
     const serverData = [
-      { id: "1325249120918704168", elementId: "fragpunk-users" }, document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
-    { id: "1314605130342989885", elementId: "marvel-users" }, ement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
-    { id: "1328517357550698576", elementId: "battlefield-users" },
-    { id: "1327026998534737952", elementId: "mechabreak-users" }, tch(() => {
-      { id: "690916074773938236", elementId: "cod-users" }, document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+      { id: "1325249120918704168", elementId: "fragpunk-users" },
+      { id: "1314605130342989885", elementId: "marvel-users" },
+      { id: "1328517357550698576", elementId: "battlefield-users" },
+      { id: "1327026998534737952", elementId: "mechabreak-users" },
+      { id: "690916074773938236", elementId: "cod-users" },
     ];
-    });
 
     const totalUsersElement = document.getElementById("total-users");
-    let totalUsers = 0; const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
-    ournament - modal");
+    let totalUsers = 0;
+
     serverData.forEach((server) => {
-      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)rnamentButton.addEventListener("click", () => {
-        .then((response) => response.json())      tournamentModal.style.display = "flex";
+      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
+        .then((response) => response.json())
         .then((data) => {
-        const activeUsers = data.presence_count || 0;
-        totalUsers += activeUsers; mit(event) {
-          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;      // Verhindert das Standardverhalten des Formulars
+          const activeUsers = data.presence_count || 0;
+          totalUsers += activeUsers;
+          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
           totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
         })
-          .catch(() => {
-            document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer"; const form = event.target;
-          });
-      });
-      ton, um mehrfaches Klicken zu verhindern
-      const tournamentButton = document.querySelector("button[onclick*='tournament-modal']"); n[type = 'submit']");
-      const tournamentModal = document.getElementById("tournament-modal"); submitButton.disabled = true;
-      tent = "Wird gesendet...";
-      tournamentButton.addEventListener("click", () => {
-        tournamentModal.style.display = "flex";, {
-        }); method: form.method,
+        .catch(() => {
+          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+        });
+    });
 
-          function redirectAfterSubmit(event) {
-            // Verhindert das Standardverhalten des Formulars
-            event.preventDefault();
+    const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
+    const tournamentModal = document.getElementById("tournament-modal");
 
-            // Formulardaten absenden            const tournamentModal = document.getElementById("tournament-modal");
-            const form = event.target; splay = "none";
-            const formData = new FormData(form);
-            // Formular zurücksetzen
-            // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
-            const submitButton = form.querySelector("button[type='submit']");
-            submitButton.disabled = true;
-            submitButton.textContent = "Wird gesendet..."; Button.disabled = false;
+    tournamentButton.addEventListener("click", () => {
+      tournamentModal.style.display = "flex";
+    });
 
-            fetch(form.action, {
-              method: form.method, versuche es erneut.");
-        body: formData, submitButton.disabled = false; // Reaktiviere den Button bei Fehler
-            })  submitButton.textContent = "Anmelden";
+    function redirectAfterSubmit(event) {
+      // Verhindert das Standardverhalten des Formulars
+      event.preventDefault();
+
+      // Formulardaten absenden
+      const form = event.target;
+      const formData = new FormData(form);
+
+      // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
+      const submitButton = form.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      submitButton.textContent = "Wird gesendet...";
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+      })
         .then((response) => {
-              if (response.ok) {
-                // Erfolgreich: Modal-Fenster schließen
-                const tournamentModal = document.getElementById("tournament-modal");ut versuchen.");
-                tournamentModal.style.display = "none"; ubmitButton.disabled = false; // Reaktiviere den Button bei Fehler
-                submitButton.textContent = "Anmelden";
-                // Formular zurücksetzen
-                form.reset();
+          if (response.ok) {
+            // Erfolgreich: Modal-Fenster schließen
+            const tournamentModal = document.getElementById("tournament-modal");
+            tournamentModal.style.display = "none";
+
+            // Formular zurücksetzen
+            form.reset();
+
+            // Button zurücksetzen
+            submitButton.disabled = false;
+            submitButton.textContent = "Anmelden";
+          } else {
+            alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
+            submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+            submitButton.textContent = "Anmelden";
+          }
+        })
+        .catch(() => {
+          alert("Serverfehler. Bitte später erneut versuchen.");
+          submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+          submitButton.textContent = "Anmelden";
+        });
+    }
   </script>
-  // Button zurücksetzen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</html>
 </body>
-</script> } }); submitButton.textContent = "Anmelden"; submitButton.disabled = false; // Reaktiviere den Button bei
-Fehler alert("Serverfehler. Bitte später erneut versuchen."); .catch(() => { }) } submitButton.textContent = "Anmelden";
-submitButton.disabled = false; // Reaktiviere den Button bei Fehler alert("Fehler bei der Anmeldung. Bitte versuche es
-erneut."); } else { submitButton.textContent = "Anmelden"; submitButton.disabled = false;
 
 </html>
