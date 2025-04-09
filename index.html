@@ -167,6 +167,11 @@
       const form = event.target;
       const formData = new FormData(form);
 
+      // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
+      const submitButton = form.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      submitButton.textContent = "Wird gesendet...";
+
       fetch(form.action, {
         method: form.method,
         body: formData,
@@ -178,10 +183,14 @@
             window.location.href = "https://blacky1326.github.io/Nextelevel-Demo/";
           } else {
             alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
+            submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+            submitButton.textContent = "Anmelden";
           }
         })
         .catch(() => {
           alert("Serverfehler. Bitte später erneut versuchen.");
+          submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+          submitButton.textContent = "Anmelden";
         });
     }
   </script>
