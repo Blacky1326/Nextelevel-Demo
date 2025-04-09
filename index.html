@@ -55,9 +55,9 @@
     }
 
     /* Hintergrund des Modals */
-    #tournament-modal {
+    #tournament-modal,
+    #admin-modal {
       backdrop-filter: blur(5px);
-      /* Weicher Hintergrund */
     }
 
     /* Formular */
@@ -214,6 +214,46 @@
     </form>
   </div>
 
+  <!-- Admin-Login -->
+  <section class="mt-10 text-center">
+    <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+      Admin Login
+    </button>
+
+    <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
+      <form id="admin-login-form"
+        class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
+        <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Admin Login</h2>
+        <div class="mb-6">
+          <label for="admin-username" class="block text-sm font-medium mb-2">Benutzername:</label>
+          <input type="text" id="admin-username" name="admin-username"
+            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+            required>
+        </div>
+        <div class="mb-6">
+          <label for="admin-password" class="block text-sm font-medium mb-2">Passwort:</label>
+          <input type="password" id="admin-password" name="admin-password"
+            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+            required>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" onclick="hideAdminLogin()"
+            class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+            Abbrechen
+          </button>
+          <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <button id="delete-users-button" onclick="resetRegistration()"
+      class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded hidden">
+      Benutzer löschen
+    </button>
+  </section>
+
   <footer class="mt-12 text-gray-500 text-sm">
     &copy; 2025 Nextlevel-Network. All rights reserved.
   </footer>
@@ -252,14 +292,16 @@
     });
 
     function redirectAfterSubmit(event) {
-      // Verhindert das Standardverhalten des Formulars
       event.preventDefault();
 
-      // Formulardaten absenden
+      if (localStorage.getItem("tournamentRegistered")) {
+        alert("Du hast dich bereits für das Turnier angemeldet.");
+        return;
+      }
+
       const form = event.target;
       const formData = new FormData(form);
 
-      // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
       const submitButton = form.querySelector("button[type='submit']");
       submitButton.disabled = true;
       submitButton.textContent = "Wird gesendet...";
@@ -270,27 +312,50 @@
       })
         .then((response) => {
           if (response.ok) {
-            // Erfolgreich: Modal-Fenster schließen
             const tournamentModal = document.getElementById("tournament-modal");
             tournamentModal.style.display = "none";
-
-            // Formular zurücksetzen
             form.reset();
-
-            // Button zurücksetzen
-            submitButton.disabled = false;
-            submitButton.textContent = "Anmelden";
+            localStorage.setItem("tournamentRegistered", "true");
+            alert("Anmeldung erfolgreich!");
           } else {
             alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
-            submitButton.disabled = false; // Reaktiviere den Button bei Fehler
-            submitButton.textContent = "Anmelden";
           }
+          submitButton.disabled = false;
+          submitButton.textContent = "Anmelden";
         })
         .catch(() => {
           alert("Serverfehler. Bitte später erneut versuchen.");
-          submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+          submitButton.disabled = false;
           submitButton.textContent = "Anmelden";
         });
+    }
+
+    function showAdminLogin() {
+      document.getElementById("admin-modal").style.display = "flex";
+    }
+
+    function hideAdminLogin() {
+      document.getElementById("admin-modal").style.display = "none";
+    }
+
+    document.getElementById("admin-login-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("admin-username").value;
+      const password = document.getElementById("admin-password").value;
+
+      if (username === "Admin" && password === "1326") {
+        alert("Login erfolgreich!");
+        hideAdminLogin();
+        document.getElementById("delete-users-button").classList.remove("hidden");
+      } else {
+        alert("Falscher Benutzername oder Passwort!");
+      }
+    });
+
+    function resetRegistration() {
+      localStorage.removeItem("tournamentRegistered");
+      alert("Alle Benutzer wurden erfolgreich gelöscht!");
     }
   </script>
 </body>
