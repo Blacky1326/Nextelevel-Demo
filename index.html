@@ -216,33 +216,6 @@
     </form>
   </div>
 
-  <!-- Benutzerliste Modal -->
-  <div id="user-list-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
-    <div class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
-      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
-      <div class="mb-4">
-        <input type="text" id="search-user" placeholder="Benutzer suchen..."
-          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
-      </div>
-      <ul id="user-list" class="space-y-4">
-        <!-- Benutzer werden hier dynamisch eingefügt -->
-      </ul>
-      <div class="flex justify-end gap-4 mt-6">
-        <button type="button" onclick="hideUserListModal()"
-          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-          Schließen
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Button zum Anzeigen der Benutzerliste -->
-  <section class="mt-10 text-center">
-    <button onclick="showUserListModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-      Benutzerliste anzeigen
-    </button>
-  </section>
-
   <!-- Admin-Login -->
   <section class="mt-10 text-center">
     <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
@@ -250,37 +223,48 @@
     </button>
 
     <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
-      <form id="admin-login-form"
-        class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
+      <div class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
         <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Admin Login</h2>
-        <div class="mb-6">
-          <label for="admin-username" class="block text-sm font-medium mb-2">Benutzername:</label>
-          <input type="text" id="admin-username" name="admin-username"
-            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
-            required>
-        </div>
-        <div class="mb-6">
-          <label for="admin-password" class="block text-sm font-medium mb-2">Passwort:</label>
-          <input type="password" id="admin-password" name="admin-password"
-            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
-            required>
-        </div>
-        <div class="flex justify-end gap-4">
-          <button type="button" onclick="hideAdminLogin()"
-            class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-            Abbrechen
-          </button>
-          <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
-            Login
-          </button>
-        </div>
-      </form>
+        <form id="admin-login-form">
+          <div class="mb-6">
+            <label for="admin-username" class="block text-sm font-medium mb-2">Benutzername:</label>
+            <input type="text" id="admin-username" name="admin-username"
+              class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+              required>
+          </div>
+          <div class="mb-6">
+            <label for="admin-password" class="block text-sm font-medium mb-2">Passwort:</label>
+            <input type="password" id="admin-password" name="admin-password"
+              class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+              required>
+          </div>
+          <div class="flex justify-end gap-4">
+            <button type="button" onclick="hideAdminLogin()"
+              class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+              Abbrechen
+            </button>
+            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <button id="delete-users-button" onclick="resetRegistration()"
-      class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded hidden">
-      Benutzer löschen
-    </button>
+    <!-- Benutzerliste (nur sichtbar nach Login) -->
+    <div id="user-list-modal" class="hidden mt-10">
+      <div
+        class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
+        <div class="mb-4">
+          <input type="text" id="search-user" placeholder="Benutzer suchen..."
+            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
+        </div>
+        <ul id="user-list" class="space-y-4">
+          <!-- Benutzer werden hier dynamisch eingefügt -->
+        </ul>
+      </div>
+    </div>
   </section>
 
   <footer class="mt-12 text-gray-500 text-sm">
@@ -380,30 +364,24 @@
       const password = document.getElementById("admin-password").value;
 
       if (username === "Admin" && password === "1326") {
-        alert("Login erfolgreich!");
         hideAdminLogin();
-        document.getElementById("delete-users-button").classList.remove("hidden");
+        loadUserList(); // Benutzerliste laden
+        document.getElementById("user-list-modal").classList.remove("hidden");
       } else {
-        alert("Falscher Benutzername oder Passwort!");
+        const errorMessage = document.createElement("div");
+        errorMessage.textContent = "Falscher Benutzername oder Passwort!";
+        errorMessage.className = "text-red-500 text-sm mt-4";
+        document.getElementById("admin-login-form").appendChild(errorMessage);
       }
     });
 
-    function resetRegistration() {
-      localStorage.removeItem("tournamentRegistered");
-      alert("Alle Benutzer wurden erfolgreich gelöscht!");
-    }
+    function loadUserList() {
+      const userList = document.getElementById("user-list");
+      userList.innerHTML = ""; // Liste zurücksetzen
 
-    function showUserListModal() {
-      const userListModal = document.getElementById("user-list-modal");
-      userListModal.style.display = "flex";
-
-      // Benutzerliste abrufen
       fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
         .then((response) => response.json())
         .then((data) => {
-          const userList = document.getElementById("user-list");
-          userList.innerHTML = ""; // Liste zurücksetzen
-
           data.forEach((user) => {
             const listItem = document.createElement("li");
             listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
@@ -422,33 +400,28 @@
           });
         })
         .catch(() => {
-          alert("Fehler beim Abrufen der Benutzerliste.");
+          const errorItem = document.createElement("li");
+          errorItem.textContent = "Fehler beim Abrufen der Benutzerliste.";
+          errorItem.className = "text-red-500";
+          userList.appendChild(errorItem);
         });
     }
 
-    function hideUserListModal() {
-      const userListModal = document.getElementById("user-list-modal");
-      userListModal.style.display = "none";
-    }
-
     function deleteUser(userId) {
-      if (confirm("Möchtest du diesen Benutzer wirklich löschen?")) {
-        fetch(`https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec`, {
-          method: "POST",
-          body: JSON.stringify({ action: "delete", id: userId }),
+      fetch(`https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec`, {
+        method: "POST",
+        body: JSON.stringify({ action: "delete", id: userId }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            loadUserList(); // Liste aktualisieren
+          } else {
+            alert("Fehler beim Löschen des Benutzers.");
+          }
         })
-          .then((response) => {
-            if (response.ok) {
-              alert("Benutzer erfolgreich gelöscht.");
-              showUserListModal(); // Liste aktualisieren
-            } else {
-              alert("Fehler beim Löschen des Benutzers.");
-            }
-          })
-          .catch(() => {
-            alert("Serverfehler. Bitte später erneut versuchen.");
-          });
-      }
+        .catch(() => {
+          alert("Serverfehler. Bitte später erneut versuchen.");
+        });
     }
 
     document.getElementById("search-user").addEventListener("input", function () {
