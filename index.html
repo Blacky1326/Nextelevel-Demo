@@ -87,37 +87,24 @@
   </section>
 
   <section class="mt-10 text-center">
-    <button id="tournament-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
-      Turnier Anmeldung (Fragpunk)
-    </button>
-  </section>
-
-  <!-- Modal für Turnieranmeldung -->
-  <div id="tournament-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
-    <div class="bg-white text-black p-6 rounded-lg w-96">
+    <form
+      action="https://script.google.com/macros/s/AKfycbylap_4lFlcBIaBh3Z6MZ56RW849Cnv9vsHdY5F7UUIfcPPgqmEzR9f0DPRXpf106cq/exec"
+      method="post" class="bg-white text-black p-6 rounded-lg w-96 mx-auto">
       <h2 class="text-xl font-bold mb-4">Turnier Anmeldung - Fragpunk</h2>
-      <form id="tournament-form">
-        <div class="mb-4">
-          <label for="username" class="block text-sm font-medium">Ingame Name:</label>
-          <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded px-3 py-2"
-            required>
-        </div>
-        <div class="mb-4">
-          <label for="rank" class="block text-sm font-medium">Rank:</label>
-          <input type="text" id="rank" name="rank" class="w-full border border-gray-300 rounded px-3 py-2" required>
-        </div>
-        <div class="flex justify-end gap-4">
-          <button type="button" id="cancel-btn"
-            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-            Abbrechen
-          </button>
-          <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-            Anmelden
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+      <div class="mb-4">
+        <label for="username" class="block text-sm font-medium">Ingame Name:</label>
+        <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded px-3 py-2"
+          required>
+      </div>
+      <div class="mb-4">
+        <label for="rank" class="block text-sm font-medium">Rank:</label>
+        <input type="text" id="rank" name="rank" class="w-full border border-gray-300 rounded px-3 py-2" required>
+      </div>
+      <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+        Anmelden
+      </button>
+    </form>
+  </section>
 
   <footer class="mt-12 text-gray-500 text-sm">
     &copy; 2025 Nextlevel-Network. All rights reserved.
