@@ -53,6 +53,38 @@
       outline: none;
       box-shadow: 0 0 5px #9f4fff;
     }
+
+    /* Hintergrund des Modals */
+    #tournament-modal {
+      backdrop-filter: blur(5px);
+      /* Weicher Hintergrund */
+    }
+
+    /* Formular */
+    .bg-gradient-to-br {
+      background: linear-gradient(to bottom right, #4c1d95, #000000, #6b21a8);
+    }
+
+    /* Eingabefelder */
+    input,
+    select {
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 10px #9f4fff;
+    }
+
+    /* Buttons */
+    button {
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 
@@ -112,22 +144,22 @@
     </button>
   </section>
 
-  <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+  <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
     <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
-      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
-      <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
-      <div class="mb-4">
-        <label for="username" class="block text-sm font-medium">Ingame Name:</label>
+      class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung - Fragpunk</h2>
+      <div class="mb-6">
+        <label for="username" class="block text-sm font-medium mb-2">Ingame Name:</label>
         <input type="text" id="username" name="username"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
           required>
       </div>
-      <div class="mb-4">
-        <label for="rank" class="block text-sm font-medium">Rank:</label>
+      <div class="mb-6">
+        <label for="rank" class="block text-sm font-medium mb-2">Rank:</label>
         <select id="rank" name="rank"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
+          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
           required>
           <option value="" disabled selected>Wähle deinen Rang</option>
           <!-- Bronze -->
