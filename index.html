@@ -56,7 +56,8 @@
 
     /* Hintergrund des Modals */
     #tournament-modal,
-    #admin-modal {
+    #admin-modal,
+    #user-list-modal {
       backdrop-filter: blur(5px);
     }
 
@@ -150,6 +151,7 @@
       method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
       <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung - Fragpunk</h2>
+      <div id="error-message" class="text-red-500 text-sm mb-4 hidden"></div>
       <div class="mb-6">
         <label for="username" class="block text-sm font-medium mb-2">Ingame Name:</label>
         <input type="text" id="username" name="username"
@@ -213,6 +215,33 @@
       </div>
     </form>
   </div>
+
+  <!-- Benutzerliste Modal -->
+  <div id="user-list-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
+    <div class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
+      <div class="mb-4">
+        <input type="text" id="search-user" placeholder="Benutzer suchen..."
+          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
+      </div>
+      <ul id="user-list" class="space-y-4">
+        <!-- Benutzer werden hier dynamisch eingefügt -->
+      </ul>
+      <div class="flex justify-end gap-4 mt-6">
+        <button type="button" onclick="hideUserListModal()"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+          Schließen
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button zum Anzeigen der Benutzerliste -->
+  <section class="mt-10 text-center">
+    <button onclick="showUserListModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+      Benutzerliste anzeigen
+    </button>
+  </section>
 
   <!-- Admin-Login -->
   <section class="mt-10 text-center">
@@ -294,8 +323,12 @@
     function redirectAfterSubmit(event) {
       event.preventDefault();
 
+      const errorMessage = document.getElementById("error-message");
+
+      // Überprüfen, ob der Benutzer bereits angemeldet ist
       if (localStorage.getItem("tournamentRegistered")) {
-        alert("Du hast dich bereits für das Turnier angemeldet.");
+        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
+        errorMessage.classList.remove("hidden");
         return;
       }
 
@@ -316,15 +349,17 @@
             tournamentModal.style.display = "none";
             form.reset();
             localStorage.setItem("tournamentRegistered", "true");
-            alert("Anmeldung erfolgreich!");
+            errorMessage.classList.add("hidden"); // Fehlermeldung ausblenden
           } else {
-            alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
+            errorMessage.textContent = "Fehler bei der Anmeldung. Bitte versuche es erneut.";
+            errorMessage.classList.remove("hidden");
           }
           submitButton.disabled = false;
           submitButton.textContent = "Anmelden";
         })
         .catch(() => {
-          alert("Serverfehler. Bitte später erneut versuchen.");
+          errorMessage.textContent = "Serverfehler. Bitte später erneut versuchen.";
+          errorMessage.classList.remove("hidden");
           submitButton.disabled = false;
           submitButton.textContent = "Anmelden";
         });
@@ -356,6 +391,104 @@
     function resetRegistration() {
       localStorage.removeItem("tournamentRegistered");
       alert("Alle Benutzer wurden erfolgreich gelöscht!");
+    }
+
+    function showUserListModal() {
+      const userListModal = document.getElementById("user-list-modal");
+      userListModal.style.display = "flex";
+
+      // Benutzerliste abrufen
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
+        .then((response) => response.json())
+        .then((data) => {
+          const userList = document.getElementById("user-list");
+          userList.innerHTML = ""; // Liste zurücksetzen
+
+          data.forEach((user) => {
+            const listItem = document.createElement("li");
+            listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
+
+            const userInfo = document.createElement("span");
+            userInfo.textContent = `${user.username} (${user.rank})`;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Löschen";
+            deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
+            deleteButton.onclick = () => deleteUser(user.id);
+
+            listItem.appendChild(userInfo);
+            listItem.appendChild(deleteButton);
+            userList.appendChild(listItem);
+          });
+        })
+        .catch(() => {
+          alert("Fehler beim Abrufen der Benutzerliste.");
+        });
+    }
+
+    function hideUserListModal() {
+      const userListModal = document.getElementById("user-list-modal");
+      userListModal.style.display = "none";
+    }
+
+    function deleteUser(userId) {
+      if (confirm("Möchtest du diesen Benutzer wirklich löschen?")) {
+        fetch(`https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec`, {
+          method: "POST",
+          body: JSON.stringify({ action: "delete", id: userId }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Benutzer erfolgreich gelöscht.");
+              showUserListModal(); // Liste aktualisieren
+            } else {
+              alert("Fehler beim Löschen des Benutzers.");
+            }
+          })
+          .catch(() => {
+            alert("Serverfehler. Bitte später erneut versuchen.");
+          });
+      }
+    }
+
+    document.getElementById("search-user").addEventListener("input", function () {
+      const searchValue = this.value.toLowerCase();
+      const userListItems = document.querySelectorAll("#user-list li");
+
+      userListItems.forEach((item) => {
+        const userInfo = item.querySelector("span").textContent.toLowerCase();
+        if (userInfo.includes(searchValue)) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+
+    const SHEET_ID = "DEINE_SPREADSHEET_ID"; // Ersetze durch die ID deines Google Sheets
+    const SHEET_NAME = "Benutzer"; // Ersetze durch den Namen deines Sheets
+
+    function doGet() {
+      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+      const rows = sheet.getDataRange().getValues();
+      const data = rows.slice(1).map((row, index) => ({
+        id: index + 1,
+        username: row[0],
+        rank: row[1],
+      }));
+      return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    function doPost(e) {
+      const { action, id } = JSON.parse(e.postData.contents);
+      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+
+      if (action === "delete") {
+        sheet.deleteRow(Number(id) + 1); // +1 wegen der Kopfzeile
+        return ContentService.createTextOutput("Benutzer gelöscht.");
+      }
+
+      return ContentService.createTextOutput("Ungültige Aktion.");
     }
   </script>
 </body>
