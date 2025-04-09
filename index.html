@@ -87,9 +87,16 @@
   </section>
 
   <section class="mt-10 text-center">
-    <form
+    <!-- Turnier-Anmeldung Button -->
+    <button onclick="document.getElementById('tournament-form').style.display='block'"
+      class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+      Turnier Anmeldung (Fragpunk)
+    </button>
+
+    <!-- Turnier-Anmeldung Formular -->
+    <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbylap_4lFlcBIaBh3Z6MZ56RW849Cnv9vsHdY5F7UUIfcPPgqmEzR9f0DPRXpf106cq/exec"
-      method="post" class="bg-white text-black p-6 rounded-lg w-96 mx-auto">
+      method="post" class="bg-white text-black p-6 rounded-lg w-96 mx-auto mt-6 hidden">
       <h2 class="text-xl font-bold mb-4">Turnier Anmeldung - Fragpunk</h2>
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium">Ingame Name:</label>
@@ -100,9 +107,15 @@
         <label for="rank" class="block text-sm font-medium">Rank:</label>
         <input type="text" id="rank" name="rank" class="w-full border border-gray-300 rounded px-3 py-2" required>
       </div>
-      <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-        Anmelden
-      </button>
+      <div class="flex justify-end gap-4">
+        <button type="button" onclick="document.getElementById('tournament-form').style.display='none'"
+          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+          Abbrechen
+        </button>
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+          Anmelden
+        </button>
+      </div>
     </form>
   </section>
 
