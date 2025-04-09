@@ -107,8 +107,48 @@
       </div>
       <div class="mb-4">
         <label for="rank" class="block text-sm font-medium">Rank:</label>
-        <input type="text" id="rank" name="rank"
+        <select id="rank" name="rank"
           class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2" required>
+          <option value="" disabled selected>Wähle deinen Rang</option>
+          <!-- Bronze -->
+          <option value="Bronze 5">Bronze 5</option>
+          <option value="Bronze 4">Bronze 4</option>
+          <option value="Bronze 3">Bronze 3</option>
+          <option value="Bronze 2">Bronze 2</option>
+          <option value="Bronze 1">Bronze 1</option>
+          <!-- Silber -->
+          <option value="Silber 5">Silber 5</option>
+          <option value="Silber 4">Silber 4</option>
+          <option value="Silber 3">Silber 3</option>
+          <option value="Silber 2">Silber 2</option>
+          <option value="Silber 1">Silber 1</option>
+          <!-- Gold -->
+          <option value="Gold 5">Gold 5</option>
+          <option value="Gold 4">Gold 4</option>
+          <option value="Gold 3">Gold 3</option>
+          <option value="Gold 2">Gold 2</option>
+          <option value="Gold 1">Gold 1</option>
+          <!-- Platin -->
+          <option value="Platin 5">Platin 5</option>
+          <option value="Platin 4">Platin 4</option>
+          <option value="Platin 3">Platin 3</option>
+          <option value="Platin 2">Platin 2</option>
+          <option value="Platin 1">Platin 1</option>
+          <!-- Diamant -->
+          <option value="Diamant 5">Diamant 5</option>
+          <option value="Diamant 4">Diamant 4</option>
+          <option value="Diamant 3">Diamant 3</option>
+          <option value="Diamant 2">Diamant 2</option>
+          <option value="Diamant 1">Diamant 1</option>
+          <!-- Master -->
+          <option value="Master 5">Master 5</option>
+          <option value="Master 4">Master 4</option>
+          <option value="Master 3">Master 3</option>
+          <option value="Master 2">Master 2</option>
+          <option value="Master 1">Master 1</option>
+          <!-- Fragmaster -->
+          <option value="Fragmaster">Fragmaster</option>
+        </select>
       </div>
       <div class="flex justify-end gap-4">
         <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
@@ -178,9 +218,16 @@
       })
         .then((response) => {
           if (response.ok) {
-            // Erfolgreich: Benutzer weiterleiten
-            alert("Anmeldung erfolgreich! Du wirst jetzt zurückgeleitet.");
-            window.location.href = "https://blacky1326.github.io/Nextelevel-Demo/";
+            // Erfolgreich: Modal-Fenster schließen
+            const tournamentModal = document.getElementById("tournament-modal");
+            tournamentModal.style.display = "none";
+
+            // Formular zurücksetzen
+            form.reset();
+
+            // Button zurücksetzen
+            submitButton.disabled = false;
+            submitButton.textContent = "Anmelden";
           } else {
             alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
             submitButton.disabled = false; // Reaktiviere den Button bei Fehler
