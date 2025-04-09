@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,16 @@
       font-family: 'Segoe UI', sans-serif;
       overflow-x: hidden;
     }
+
     .glow-btn {
       transition: 0.3s;
     }
+
     .glow-btn:hover {
       box-shadow: 0 0 15px #9f4fff;
       transform: scale(1.05);
     }
+
     .bg-image {
       position: fixed;
       top: 0;
@@ -33,37 +37,49 @@
     }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col items-center p-6">
   <div class="bg-image"></div>
 
   <header class="text-center mb-10">
     <h1 class="text-4xl md:text-5xl font-bold text-purple-400 mb-4">Nextlevel-Network</h1>
-    <p class="text-lg text-gray-300 max-w-xl">Nextlevel-Network bringt euch alle zu einem Nextlevel-Gaming aus ganz Deutschland, Österreich und der Schweiz</p>
+    <p class="text-lg text-gray-300 max-w-xl">Nextlevel-Network bringt euch alle zu einem Nextlevel-Gaming aus ganz
+      Deutschland, Österreich und der Schweiz</p>
     <div id="total-users" class="text-2xl text-green-400 mt-4">Lade aktive Nutzer...</div>
+    <div class="mt-6 flex justify-center gap-4">
+      <a href="/register.html"
+        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Register</a>
+      <a href="/login.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Login</a>
+    </div>
   </header>
 
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full">
-    <a href="https://discord.gg/fragpunkde" target="_blank" class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <a href="https://discord.gg/fragpunkde" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/qJT9QwP.png" alt="Fragpunk Logo" class="w-12 h-12 mb-2">
       Spiel Fragpunk
       <div id="fragpunk-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
     </a>
-    <a href="https://discord.gg/NPy3qwW7dE" target="_blank" class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <a href="https://discord.gg/NPy3qwW7dE" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/g9vzzYh.jpeg" alt="Marvel Logo" class="w-12 h-12 mb-2">
       Spiel Marvel Rivals
       <div id="marvel-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
     </a>
-    <a href="https://discord.gg/NFwBBc94" target="_blank" class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <a href="https://discord.gg/NFwBBc94" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/FLsEolX.png" alt="Battlefield Logo" class="w-12 h-12 mb-2">
       Spiel Battlefield Labs
       <div id="battlefield-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
     </a>
-    <a href="https://discord.gg/2EWXJnuRby" target="_blank" class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <a href="https://discord.gg/2EWXJnuRby" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/fcyYWpM.png" alt="MechaBREAK Logo" class="w-12 h-12 mb-2">
       Spiel MechaBREAK
       <div id="mechabreak-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
     </a>
-    <a href="https://discord.gg/AC6JUGnwTH" target="_blank" class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <a href="https://discord.gg/AC6JUGnwTH" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/AvqJ0bp.png" alt="COD Warzone Logo" class="w-12 h-12 mb-2">
       Call of Duty Warzone
       <div id="cod-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
@@ -101,4 +117,5 @@
     });
   </script>
 </body>
+
 </html>
