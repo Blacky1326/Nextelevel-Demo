@@ -88,36 +88,38 @@
 
   <section class="mt-10 text-center">
     <!-- Turnier-Anmeldung Button -->
-    <button onclick="document.getElementById('tournament-form').style.display='block'"
+    <button onclick="document.getElementById('tournament-modal').style.display='flex'"
       class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
       Turnier Anmeldung (Fragpunk)
     </button>
+  </section>
 
-    <!-- Turnier-Anmeldung Formular -->
+  <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
     <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
-      method="post" class="bg-white text-black p-6 rounded-lg w-96 mx-auto mt-6 hidden">
-      <h2 class="text-xl font-bold mb-4">Turnier Anmeldung - Fragpunk</h2>
+      method="post" class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium">Ingame Name:</label>
-        <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded px-3 py-2"
-          required>
+        <input type="text" id="username" name="username"
+          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2" required>
       </div>
       <div class="mb-4">
         <label for="rank" class="block text-sm font-medium">Rank:</label>
-        <input type="text" id="rank" name="rank" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <input type="text" id="rank" name="rank"
+          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2" required>
       </div>
       <div class="flex justify-end gap-4">
-        <button type="button" onclick="document.getElementById('tournament-form').style.display='none'"
-          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+        <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
           Abbrechen
         </button>
-        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+        <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
           Anmelden
         </button>
       </div>
     </form>
-  </section>
+  </div>
 
   <footer class="mt-12 text-gray-500 text-sm">
     &copy; 2025 Nextlevel-Network. All rights reserved.
@@ -147,6 +149,13 @@
         .catch(() => {
           document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
         });
+    });
+
+    const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
+    const tournamentModal = document.getElementById("tournament-modal");
+
+    tournamentButton.addEventListener("click", () => {
+      tournamentModal.style.display = "flex";
     });
   </script>
 </body>
