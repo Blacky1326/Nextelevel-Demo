@@ -97,7 +97,8 @@
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
     <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
-      method="post" class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+      method="post" onsubmit="redirectAfterSubmit(event)"
+      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium">Ingame Name:</label>
@@ -157,6 +158,32 @@
     tournamentButton.addEventListener("click", () => {
       tournamentModal.style.display = "flex";
     });
+
+    function redirectAfterSubmit(event) {
+      // Verhindert das Standardverhalten des Formulars
+      event.preventDefault();
+
+      // Formulardaten absenden
+      const form = event.target;
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            // Erfolgreich: Benutzer weiterleiten
+            alert("Anmeldung erfolgreich! Du wirst jetzt zurückgeleitet.");
+            window.location.href = "https://blacky1326.github.io/Nextelevel-Demo/";
+          } else {
+            alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
+          }
+        })
+        .catch(() => {
+          alert("Serverfehler. Bitte später erneut versuchen.");
+        });
+    }
   </script>
 </body>
 
