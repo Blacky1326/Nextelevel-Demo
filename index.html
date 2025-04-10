@@ -392,7 +392,7 @@
 
     function deleteUser(index) {
       if (confirm("Möchten Sie diesen Benutzer wirklich löschen?")) {
-        fetch(`https://script.google.com/macros/s/AKfycbxwAETSz3gSLXbhR0XIkVvVkaMFWrgkQeDF2pHQvkpAGRSK9qx1PMuATrb6UK25GV3P9A/exec?index=${index}`, {
+        fetch(`https://script.google.com/macros/s/AKfycbw7La7WmyV3V5T8xhhqoIFG2qMqEB1rHzUYcezAHGfr04mTc5VdAi7jd1-SO89j5FxBUA/exec?index=${index}`, {
           method: "DELETE",
         })
           .then(response => {

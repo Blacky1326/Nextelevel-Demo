@@ -51,16 +51,23 @@ function doDelete(e) {
       throw new Error("Ungültiger Index");
     }
 
-    return ContentService.createTextOutput(
-      JSON.stringify({ status: "success", message: "Benutzer gelöscht" })
-    )
+    const response = {
+      status: "success",
+      message: "Benutzer gelöscht",
+    };
+
+    return ContentService.createTextOutput(JSON.stringify(response))
       .setMimeType(ContentService.MimeType.JSON)
-      .setContent("")
-      .setMimeType(ContentService.MimeType.JSON);
+      .setContent(JSON.stringify(response));
   } catch (error) {
-    return ContentService.createTextOutput(
-      JSON.stringify({ status: "error", message: error.message })
-    ).setMimeType(ContentService.MimeType.JSON);
+    const response = {
+      status: "error",
+      message: error.message,
+    };
+
+    return ContentService.createTextOutput(JSON.stringify(response))
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent(JSON.stringify(response));
   }
 }
 
