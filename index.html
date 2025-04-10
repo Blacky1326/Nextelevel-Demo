@@ -147,7 +147,7 @@
 
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
     <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbyYaHu1HVu4VstymO-g4Xcmf6Hnl9_QaW7pNF7M6xssSfCgm50E-__NrE5tHvsxREaK/exec"
+      action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
       <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung - Fragpunk</h2>
@@ -382,7 +382,7 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
 
-      fetch("https://script.google.com/macros/s/AKfycbyYaHu1HVu4VstymO-g4Xcmf6Hnl9_QaW7pNF7M6xssSfCgm50E-__NrE5tHvsxREaK/exec")
+      fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec")
         .then((response) => response.json())
         .then((data) => {
           data.forEach((user) => {
@@ -411,20 +411,13 @@
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbyYaHu1HVu4VstymO-g4Xcmf6Hnl9_QaW7pNF7M6xssSfCgm50E-__NrE5tHvsxREaK/exec`, {
+      fetch(`https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec`, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
-        headers: { "Content-Type": "application/json" },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            // Benutzer aus localStorage entfernen
-            const username = data.username; // Server gibt den Benutzernamen zurück
-            removeFromLocalStorage(username);
-
-            // Benutzerliste aktualisieren
-            loadUserList();
+        .then((response) => {
+          if (response.ok) {
+            loadUserList(); // Liste aktualisieren
           } else {
             alert("Fehler beim Löschen des Benutzers.");
           }
@@ -450,7 +443,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbyYaHu1HVu4VstymO-g4Xcmf6Hnl9_QaW7pNF7M6xssSfCgm50E-__NrE5tHvsxREaK/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec", {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
@@ -459,12 +452,7 @@
           .then((data) => {
             if (data.success) {
               alert(data.message || "Alle Benutzer wurden gelöscht.");
-
-              // localStorage leeren
-              localStorage.removeItem("registeredUsers");
-
-              // Benutzerliste aktualisieren
-              loadUserList();
+              loadUserList(); // Benutzerliste aktualisieren
             } else {
               alert(data.message || "Fehler beim Löschen der Benutzer.");
             }
@@ -474,12 +462,6 @@
           });
       }
     });
-
-    function removeFromLocalStorage(username) {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      const updatedUsers = registeredUsers.filter((user) => user !== username);
-      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
-    }
   </script>
 </body>
 
