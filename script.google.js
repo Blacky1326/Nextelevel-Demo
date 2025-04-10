@@ -51,18 +51,19 @@ function doGet(e) {
 
 function doDelete(e) {
   try {
-    // Open the Google Sheet by its ID
     const sheet = SpreadsheetApp.openById("1Zx51WFIAprs00YtCm6wfuIUgY7uwRtlPx17UVObC124").getActiveSheet();
+    const index = parseInt(e.parameter.index, 10);
 
-    // Clear all rows except the header
-    sheet.deleteRows(2, sheet.getLastRow() - 1);
+    if (!isNaN(index) && index > 0) {
+      sheet.deleteRow(index + 1); // +1 wegen der Kopfzeile
+    } else {
+      throw new Error("Ungültiger Index");
+    }
 
-    // Return a success response
     return ContentService.createTextOutput(
-      JSON.stringify({ status: "success", message: "All users deleted successfully" })
+      JSON.stringify({ status: "success", message: "Benutzer gelöscht" })
     ).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
-    // Handle errors and return a failure response
     return ContentService.createTextOutput(
       JSON.stringify({ status: "error", message: error.message })
     ).setMimeType(ContentService.MimeType.JSON);
