@@ -43,29 +43,35 @@ function doGet(e) {
 function doDelete(e) {
   try {
     const sheet = SpreadsheetApp.openById("1Zx51WFIAprs00YtCm6wfuIUgY7uwRtlPx17UVObC124").getActiveSheet();
-    const index = parseInt(e.parameter.index, 10);
+    const usernameToDelete = e.parameter.username;
 
-    if (!isNaN(index) && index > 0) {
-      sheet.deleteRow(index + 1); // +1 wegen der Kopfzeile
-    } else {
-      throw new Error("Ungültiger Index");
+    if (!usernameToDelete) {
+      throw new Error("Kein Benutzername angegeben.");
     }
 
-    const response = {
-      status: "success",
-      message: "Benutzer gelöscht",
-    };
+    const data = sheet.getDataRange().getValues();
+    let rowToDelete = -1;
 
-    return ContentService.createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON);
+    // Suche nach der Zeile mit dem angegebenen Benutzernamen
+    for (let i = 1; i < data.length; i++) { // Überspringe die Kopfzeile
+      if (data[i][1] === usernameToDelete) { // Spalte 1 enthält den Benutzernamen
+        rowToDelete = i + 1; // +1, da die Zeilen in der Tabelle bei 1 beginnen
+        break;
+      }
+    }
+
+    if (rowToDelete > 0) {
+      sheet.deleteRow(rowToDelete);
+      return ContentService.createTextOutput(
+        JSON.stringify({ status: "success", message: "Benutzer gelöscht" })
+      ).setMimeType(ContentService.MimeType.JSON);
+    } else {
+      throw new Error("Benutzer nicht gefunden.");
+    }
   } catch (error) {
-    const response = {
-      status: "error",
-      message: error.message,
-    };
-
-    return ContentService.createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(
+      JSON.stringify({ status: "error", message: error.message })
+    ).setMimeType(ContentService.MimeType.JSON);
   }
 }
 

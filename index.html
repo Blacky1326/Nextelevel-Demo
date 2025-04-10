@@ -354,7 +354,7 @@
     }
 
     function fetchRegisteredUsers() {
-      fetch("https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec")
+      fetch("https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec")
         .then(response => response.json())
         .then(data => {
           const users = data.users || [];
@@ -364,13 +364,13 @@
           userTableBody.innerHTML = "";
 
           // Füge Benutzer zur Tabelle hinzu
-          users.forEach((user, index) => {
+          users.forEach(user => {
             const row = document.createElement("tr");
             row.innerHTML = `
               <td class="border border-gray-600 px-2 py-1">${user.username}</td>
               <td class="border border-gray-600 px-2 py-1">${user.rank}</td>
               <td class="border border-gray-600 px-2 py-1">
-                <button onclick="deleteUser(${index})" 
+                <button onclick="deleteUser('${user.username}')" 
                   class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">
                   Löschen
                 </button>
@@ -422,7 +422,7 @@
     function deleteAllUsers() {
       showConfirmationDialog("Möchten Sie wirklich alle Benutzer löschen?", (confirmed) => {
         if (confirmed) {
-          fetch("https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec", {
+          fetch("https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec", {
             method: "DELETE",
           })
             .then(response => {
@@ -441,18 +441,19 @@
     }
 
     // Aktualisierte deleteUser-Funktion
-    function deleteUser(index) {
-      showConfirmationDialog("Möchten Sie diesen Benutzer wirklich löschen?", (confirmed) => {
+    function deleteUser(username) {
+      showConfirmationDialog(`Möchten Sie den Benutzer "${username}" wirklich löschen?`, (confirmed) => {
         if (confirmed) {
-          fetch(`https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec?index=${index}`, {
+          fetch(`https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec?username=${encodeURIComponent(username)}`, {
             method: "DELETE",
           })
-            .then(response => {
-              if (response.ok) {
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === "success") {
                 showStatusMessage("Benutzer wurde erfolgreich gelöscht.");
                 fetchRegisteredUsers(); // Aktualisiere die Tabelle
               } else {
-                showStatusMessage("Fehler beim Löschen des Benutzers.", true);
+                showStatusMessage(`Fehler: ${data.message}`, true);
               }
             })
             .catch(() => {
