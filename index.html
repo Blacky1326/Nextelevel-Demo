@@ -263,6 +263,9 @@
         <ul id="user-list" class="space-y-4">
           <!-- Benutzer werden hier dynamisch eingefügt -->
         </ul>
+        <button id="delete-all-users" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">
+          Alle Benutzer löschen
+        </button>
       </div>
     </div>
   </section>
@@ -408,7 +411,7 @@
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbxu1f8lpjcuBgZIaK99Obq_VUNf2ZFzCsk-wYizTmwsHINd393LLTCTGyFz8TSD415BJw/exec`, {
+      fetch(`https://script.google.com/macros/s/AKfycbyrANS1TlUliaDI15vG3dTBM1qgtvGFmaFs7g6RioHmnupsjHQ5HSS88ZC7jgXxPmjpEQ/exec`, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
       })
@@ -436,6 +439,28 @@
           item.style.display = "none";
         }
       });
+    });
+
+    document.getElementById("delete-all-users").addEventListener("click", function () {
+      if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
+        fetch("https://script.google.com/macros/s/AKfycbyrANS1TlUliaDI15vG3dTBM1qgtvGFmaFs7g6RioHmnupsjHQ5HSS88ZC7jgXxPmjpEQ/exec", {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteAll" }),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert(data.message || "Alle Benutzer wurden gelöscht.");
+              loadUserList(); // Benutzerliste aktualisieren
+            } else {
+              alert(data.message || "Fehler beim Löschen der Benutzer.");
+            }
+          })
+          .catch(() => {
+            alert("Serverfehler. Bitte später erneut versuchen.");
+          });
+      }
     });
   </script>
 </body>
