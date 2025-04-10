@@ -373,7 +373,7 @@
 
     function deleteAllUsers() {
       if (confirm("Möchten Sie wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec", {
+        fetch("https://script.google.com/macros/s/AKfycby4_1Dh_azRN_ZKLDydMTJcE-no73T_tdHJqjb18_ISiTUQsWLkTcJN1kdmdXNDbUbMKg/exec", {
           method: "DELETE",
         })
           .then(response => {
@@ -392,7 +392,7 @@
 
     function deleteUser(index) {
       if (confirm("Möchten Sie diesen Benutzer wirklich löschen?")) {
-        fetch(`https://script.google.com/macros/s/AKfycbwbPi8q3ICMPk7qvgsEzu2e44TpyFQwyErTaONvh4JEwuqxiHjVkGgqBza7U55RjfavuA/exec?index=${index}`, {
+        fetch(`https://script.google.com/macros/s/AKfycby4_1Dh_azRN_ZKLDydMTJcE-no73T_tdHJqjb18_ISiTUQsWLkTcJN1kdmdXNDbUbMKg/exec?index=${index}`, {
           method: "DELETE",
         })
           .then(response => {
