@@ -382,7 +382,7 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
 
-      fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec")
+      fetch("https://script.google.com/macros/s/AKfycbzb6Aefx9Oa395dBzXKSKqu7fZBXNKsxO9Dvs7DQCLppze2CfB3QeBXfHa7I3Oa-S7J/exec")
         .then((response) => response.json())
         .then((data) => {
           data.forEach((user) => {
@@ -411,7 +411,7 @@
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec`, {
+      fetch(`https://script.google.com/macros/s/AKfycbzb6Aefx9Oa395dBzXKSKqu7fZBXNKsxO9Dvs7DQCLppze2CfB3QeBXfHa7I3Oa-S7J/exec`, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
         headers: { "Content-Type": "application/json" },
@@ -450,7 +450,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbzb6Aefx9Oa395dBzXKSKqu7fZBXNKsxO9Dvs7DQCLppze2CfB3QeBXfHa7I3Oa-S7J/exec", {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
