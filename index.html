@@ -378,13 +378,15 @@
       }
     });
 
-    function loadUserList() {
-      const userList = document.getElementById("user-list");
-      userList.innerHTML = ""; // Liste zurücksetzen
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMZH1t2vn3t5BsMonR4EpOGCor2wurBxn2j4Y5LD47Jt3pCCIuSO9HvayOOrKKhIyS4Q/exec"; // Ersetze durch die Web-App-URL
 
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
+    function loadUserList() {
+      fetch(SCRIPT_URL)
         .then((response) => response.json())
         .then((data) => {
+          const userList = document.getElementById("user-list");
+          userList.innerHTML = ""; // Liste zurücksetzen
+
           data.forEach((user) => {
             const listItem = document.createElement("li");
             listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
@@ -406,20 +408,22 @@
           const errorItem = document.createElement("li");
           errorItem.textContent = "Fehler beim Abrufen der Benutzerliste.";
           errorItem.className = "text-red-500";
-          userList.appendChild(errorItem);
+          document.getElementById("user-list").appendChild(errorItem);
         });
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec`, {
+      fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
+        headers: { "Content-Type": "application/json" },
       })
-        .then((response) => {
-          if (response.ok) {
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
             loadUserList(); // Liste aktualisieren
           } else {
-            alert("Fehler beim Löschen des Benutzers.");
+            alert(data.message || "Fehler beim Löschen des Benutzers.");
           }
         })
         .catch(() => {
@@ -443,7 +447,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbwMZH1t2vn3t5BsMonR4EpOGCor2wurBxn2j4Y5LD47Jt3pCCIuSO9HvayOOrKKhIyS4Q/exec", {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
