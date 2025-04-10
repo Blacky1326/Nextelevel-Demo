@@ -281,16 +281,17 @@
       submitButton.disabled = true;
       submitButton.textContent = "Wird gesendet...";
 
+      const formData = new URLSearchParams();
+      formData.append("action", "add");
+      formData.append("username", username);
+      formData.append("rank", rank);
+
       fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({
-          action: "add",
-          username: username,
-          rank: rank,
-        }),
+        body: formData.toString(),
       })
         .then((response) => {
           if (!response.ok) {
