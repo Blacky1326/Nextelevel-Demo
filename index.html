@@ -390,6 +390,42 @@
         }
       });
     });
+
+    const serverData = [
+      { id: "1325249120918704168", elementId: "fragpunk-users" },
+      { id: "1314605130342989885", elementId: "marvel-users" },
+      { id: "1328517357550698576", elementId: "battlefield-users" },
+      { id: "1327026998534737952", elementId: "mechabreak-users" },
+      { id: "690916074773938236", elementId: "cod-users" },
+    ];
+
+    const totalUsersElement = document.getElementById("total-users");
+    let totalUsers = 0;
+
+    serverData.forEach((server) => {
+      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
+        .then((response) => response.json())
+        .then((data) => {
+          const activeUsers = data.presence_count || 0;
+          totalUsers += activeUsers;
+          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
+          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
+        })
+        .catch(() => {
+          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+        });
+    });
+
+    function doGet() {
+      const sheet = SpreadsheetApp.openById("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec").getSheetByName("Fragpunk Anmeldung");
+      const rows = sheet.getDataRange().getValues();
+      const data = rows.slice(1).map((row, index) => ({
+        id: index + 1,
+        username: row[0],
+        rank: row[1],
+      }));
+      return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+    }
   </script>
 </body>
 
