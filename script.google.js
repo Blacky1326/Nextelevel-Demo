@@ -53,7 +53,10 @@ function doDelete(e) {
 
     return ContentService.createTextOutput(
       JSON.stringify({ status: "success", message: "Benutzer gelöscht" })
-    ).setMimeType(ContentService.MimeType.JSON);
+    )
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent("")
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(
       JSON.stringify({ status: "error", message: error.message })

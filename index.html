@@ -122,7 +122,7 @@
 
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
     <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec"
+      action="https://script.google.com/macros/s/AKfycbxwAETSz3gSLXbhR0XIkVvVkaMFWrgkQeDF2pHQvkpAGRSK9qx1PMuATrb6UK25GV3P9A/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
@@ -341,7 +341,7 @@
     }
 
     function fetchRegisteredUsers() {
-      fetch("https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec")
+      fetch("https://script.google.com/macros/s/AKfycbxwAETSz3gSLXbhR0XIkVvVkaMFWrgkQeDF2pHQvkpAGRSK9qx1PMuATrb6UK25GV3P9A/exec")
         .then(response => response.json())
         .then(data => {
           const users = data.users || [];
@@ -373,7 +373,7 @@
 
     function deleteAllUsers() {
       if (confirm("Möchten Sie wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycby4_1Dh_azRN_ZKLDydMTJcE-no73T_tdHJqjb18_ISiTUQsWLkTcJN1kdmdXNDbUbMKg/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxwAETSz3gSLXbhR0XIkVvVkaMFWrgkQeDF2pHQvkpAGRSK9qx1PMuATrb6UK25GV3P9A/exec", {
           method: "DELETE",
         })
           .then(response => {
@@ -392,7 +392,7 @@
 
     function deleteUser(index) {
       if (confirm("Möchten Sie diesen Benutzer wirklich löschen?")) {
-        fetch(`https://script.google.com/macros/s/AKfycby4_1Dh_azRN_ZKLDydMTJcE-no73T_tdHJqjb18_ISiTUQsWLkTcJN1kdmdXNDbUbMKg/exec?index=${index}`, {
+        fetch(`https://script.google.com/macros/s/AKfycbxwAETSz3gSLXbhR0XIkVvVkaMFWrgkQeDF2pHQvkpAGRSK9qx1PMuATrb6UK25GV3P9A/exec?index=${index}`, {
           method: "DELETE",
         })
           .then(response => {
