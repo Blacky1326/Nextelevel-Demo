@@ -476,7 +476,8 @@
     // Funktion zur Überprüfung, ob der Benutzer bereits registriert ist
     function checkIfUserRegistered(username) {
       const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      return registeredUsers.some(user => user.username === username);
+      // Überprüfen, ob der Benutzername bereits existiert (Groß-/Kleinschreibung beachten)
+      return registeredUsers.some(user => user.username.toLowerCase() === username.toLowerCase());
     }
 
     // Funktion zur Registrierung eines Benutzers
@@ -508,16 +509,6 @@
       messageElement.classList.remove("hidden");
 
       document.getElementById("tournament-form").reset();
-      updateUserTable(); // Aktualisiere die Benutzerliste
-    }
-
-    // Funktion zum Löschen eines Benutzers
-    function deleteUser(username) {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      const updatedUsers = registeredUsers.filter(user => user.username !== username);
-      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
-
-      showStatusMessage(`Benutzer "${username}" wurde gelöscht.`);
       updateUserTable(); // Aktualisiere die Benutzerliste
     }
 
