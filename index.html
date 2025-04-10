@@ -479,23 +479,46 @@
       return registeredUsers.includes(username);
     }
 
+    // Funktion zur Überprüfung, ob die IP-Adresse bereits registriert ist
+    function checkIfIpRegistered(ip) {
+      const registeredIps = JSON.parse(localStorage.getItem("registeredIps")) || [];
+      return registeredIps.includes(ip);
+    }
+
     // Funktion zur Registrierung eines Benutzers
-    function registerUser(event) {
+    async function registerUser(event) {
       event.preventDefault();
 
       const username = document.getElementById("username").value;
       const rank = document.getElementById("rank").value;
 
-      if (checkIfUserRegistered(username)) {
+      // IP-Adresse abrufen
+      const ip = await fetch("https://api.ipify.org?format=json")
+        .then(response => response.json())
+        .then(data => data.ip)
+        .catch(() => null);
+
+      if (!ip) {
+        alert("Fehler beim Abrufen der IP-Adresse. Bitte versuchen Sie es später erneut.");
+        return;
+      }
+
+      // Überprüfen, ob die IP-Adresse bereits registriert ist
+      if (checkIfIpRegistered(ip)) {
         const messageElement = document.getElementById("registration-message");
         messageElement.textContent = "Du bist bereits registriert!";
         messageElement.classList.remove("hidden");
         return;
       }
 
-      // Benutzer in localStorage speichern
+      // IP-Adresse in localStorage speichern
+      const registeredIps = JSON.parse(localStorage.getItem("registeredIps")) || [];
+      registeredIps.push(ip);
+      localStorage.setItem("registeredIps", JSON.stringify(registeredIps));
+
+      // Benutzername und Rang speichern (optional)
       const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      registeredUsers.push(username);
+      registeredUsers.push({ username, rank, ip });
       localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
 
       const messageElement = document.getElementById("registration-message");
@@ -503,6 +526,13 @@
       messageElement.classList.remove("hidden");
 
       document.getElementById("tournament-form").reset();
+    }
+
+    // Funktion zum Löschen aller Benutzer und IPs
+    function deleteAllUsers() {
+      localStorage.removeItem("registeredIps");
+      localStorage.removeItem("registeredUsers");
+      alert("Alle Benutzer und IPs wurden gelöscht.");
     }
 
     // Event-Listener für das Registrierungsformular
