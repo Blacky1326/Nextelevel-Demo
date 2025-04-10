@@ -472,7 +472,45 @@
         }
       });
     }
+
+    // Funktion zur Überprüfung, ob der Benutzer bereits registriert ist
+    function checkIfUserRegistered(username) {
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      return registeredUsers.includes(username);
+    }
+
+    // Funktion zur Registrierung eines Benutzers
+    function registerUser(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const rank = document.getElementById("rank").value;
+
+      if (checkIfUserRegistered(username)) {
+        const messageElement = document.getElementById("registration-message");
+        messageElement.textContent = "Du bist bereits registriert!";
+        messageElement.classList.remove("hidden");
+        return;
+      }
+
+      // Benutzer in localStorage speichern
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      registeredUsers.push(username);
+      localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+
+      const messageElement = document.getElementById("registration-message");
+      messageElement.textContent = "Erfolgreich registriert!";
+      messageElement.classList.remove("hidden");
+
+      document.getElementById("tournament-form").reset();
+    }
+
+    // Event-Listener für das Registrierungsformular
+    document.getElementById("tournament-form").addEventListener("submit", registerUser);
   </script>
+
+  <!-- Nachricht für den Benutzer -->
+  <div id="registration-message" class="text-center text-red-500 font-bold hidden"></div>
 </body>
 
 </html>
