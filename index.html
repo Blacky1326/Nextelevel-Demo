@@ -134,6 +134,27 @@
     </form>
   </section>
 
+  <!-- Admin Panel -->
+  <section class="mt-10 max-w-lg w-full bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Admin Panel</h2>
+    <form id="admin-login-form" class="w-full mb-4">
+      <div class="mb-4">
+        <label for="admin-username" class="block text-sm font-medium text-gray-300">Admin Name:</label>
+        <input type="text" id="admin-username" class="w-full p-2 rounded bg-gray-800 text-white"
+          placeholder="Admin Name" required>
+      </div>
+      <div class="mb-4">
+        <label for="admin-password" class="block text-sm font-medium text-gray-300">Passwort:</label>
+        <input type="password" id="admin-password" class="w-full p-2 rounded bg-gray-800 text-white"
+          placeholder="Passwort" required>
+      </div>
+      <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded">Login</button>
+    </form>
+    <div id="admin-actions" class="hidden w-full">
+      <button id="delete-all-users" class="bg-red-600 text-white px-4 py-2 rounded w-full">Alle User löschen</button>
+    </div>
+  </section>
+
   <footer class="mt-12 text-gray-500 text-sm">
     &copy; 2025 Nextlevel-Network. All rights reserved.
   </footer>
@@ -165,7 +186,7 @@
     });
 
     // Google Apps Script Web-App URL
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCCfkOPYgJtUDq2-y5z9tKslXUlAppQYbyJ74jsB8qq_OL_KQphKE-TxVbVZnN2ZU/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYybIMOkH_RTpr5mJzMfStsb8dM9unMWuNl4tJb2s1sH1fK1kC2cW_IOpgtXa2WEQ8/exec";
 
     // Registrierung Formular
     const registrationForm = document.getElementById("registration-form");
@@ -198,6 +219,45 @@
           registrationMessage.textContent = "Fehler bei der Anmeldung.";
           registrationMessage.style.color = "red";
         });
+    });
+
+    const ADMIN_USERNAME = "admin";
+    const ADMIN_PASSWORD = "1326";
+
+    const adminLoginForm = document.getElementById("admin-login-form");
+    const adminActions = document.getElementById("admin-actions");
+
+    adminLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("admin-username").value.trim();
+      const password = document.getElementById("admin-password").value.trim();
+
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        adminActions.classList.remove("hidden");
+        adminLoginForm.classList.add("hidden");
+      } else {
+        alert("Falscher Admin-Name oder Passwort!");
+      }
+    });
+
+    const deleteAllUsersButton = document.getElementById("delete-all-users");
+
+    deleteAllUsersButton.addEventListener("click", () => {
+      if (confirm("Möchtest du wirklich alle User löschen?")) {
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteAllUsers" }),
+          headers: { "Content-Type": "application/json" }
+        })
+          .then(response => response.json())
+          .then(data => {
+            alert(data.message || "Alle User wurden gelöscht.");
+          })
+          .catch(error => {
+            console.error("Fehler beim Löschen aller User:", error);
+            alert("Fehler beim Löschen aller User.");
+          });
+      }
     });
   </script>
 </body>
