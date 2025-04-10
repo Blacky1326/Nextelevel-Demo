@@ -112,9 +112,17 @@
     </button>
   </section>
 
+  <section class="mt-10 text-center">
+    <!-- Admin Login Button -->
+    <button onclick="document.getElementById('admin-modal').style.display='flex'"
+      class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+      Admin Login
+    </button>
+  </section>
+
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
     <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbxb4MVoPI8kwzFgKOQHJpWgkpFJPfXt5VQAnRbFkDWDOxz2rzrRoszbKsWLFdJhi0bfgw/exec"
+      action="https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
@@ -180,6 +188,52 @@
         </button>
       </div>
     </form>
+  </div>
+
+  <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+    <form id="admin-login-form" onsubmit="handleAdminLogin(event)"
+      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-red-400">Admin Login</h2>
+      <div class="mb-4">
+        <label for="admin-username" class="block text-sm font-medium">Login Name:</label>
+        <input type="text" id="admin-username" name="admin-username"
+          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
+          required>
+      </div>
+      <div class="mb-4">
+        <label for="admin-password" class="block text-sm font-medium">Passwort:</label>
+        <input type="password" id="admin-password" name="admin-password"
+          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
+          required>
+      </div>
+      <div class="flex justify-end gap-4">
+        <button type="button" onclick="document.getElementById('admin-modal').style.display='none'"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+          Abbrechen
+        </button>
+        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="admin-panel" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+    <div class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-red-400">Admin Panel</h2>
+      <button onclick="viewRegisteredUsers()"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full mb-4">
+        Alle angemeldeten Benutzer anzeigen
+      </button>
+      <button onclick="deleteAllUsers()"
+        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full">
+        Alle Benutzer löschen
+      </button>
+      <button onclick="document.getElementById('admin-panel').style.display='none'"
+        class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
+        Logout
+      </button>
+    </div>
   </div>
 
   <footer class="mt-12 text-gray-500 text-sm">
@@ -259,6 +313,49 @@
           submitButton.disabled = false; // Reaktiviere den Button bei Fehler
           submitButton.textContent = "Anmelden";
         });
+    }
+
+    function handleAdminLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById("admin-username").value;
+      const password = document.getElementById("admin-password").value;
+
+      if (username === "Admin" && password === "1326") {
+        document.getElementById("admin-modal").style.display = "none";
+        document.getElementById("admin-panel").style.display = "flex";
+      } else {
+        alert("Falscher Login Name oder Passwort!");
+      }
+    }
+
+    function viewRegisteredUsers() {
+      fetch("https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec")
+        .then(response => response.json())
+        .then(data => {
+          const users = data.users || [];
+          alert("Angemeldete Benutzer:\n" + users.map(user => `Name: ${user.username}, Rank: ${user.rank}`).join("\n"));
+        })
+        .catch(() => {
+          alert("Fehler beim Abrufen der Benutzer.");
+        });
+    }
+
+    function deleteAllUsers() {
+      if (confirm("Möchten Sie wirklich alle Benutzer löschen?")) {
+        fetch("https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec", {
+          method: "DELETE",
+        })
+          .then(response => {
+            if (response.ok) {
+              alert("Alle Benutzer wurden erfolgreich gelöscht.");
+            } else {
+              alert("Fehler beim Löschen der Benutzer.");
+            }
+          })
+          .catch(() => {
+            alert("Serverfehler. Bitte später erneut versuchen.");
+          });
+      }
     }
   </script>
 </body>
