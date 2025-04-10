@@ -275,13 +275,6 @@
       const errorMessage = document.getElementById("error-message");
       const submitButton = event.target.querySelector("button[type='submit']");
 
-      // Überprüfen, ob der Benutzer bereits angemeldet ist
-      if (localStorage.getItem("tournamentRegistered")) {
-        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
-        errorMessage.classList.remove("hidden");
-        return;
-      }
-
       const formData = new FormData(event.target);
 
       submitButton.disabled = true;
@@ -289,14 +282,26 @@
 
       fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify({
+          action: "add",
+          username: formData.get("username"),
+          rank: formData.get("rank"),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
         .then((response) => {
-          if (!response.ok) throw new Error("Fehler bei der Anmeldung.");
+          if (!response.ok) {
+            throw new Error("Fehler bei der Anmeldung.");
+          }
+          return response.text();
+        })
+        .then((message) => {
           document.getElementById("tournament-modal").style.display = "none";
           localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
           errorMessage.classList.add("hidden");
-          document.getElementById("success-message").textContent = "Erfolgreich für das Turnier angemeldet!";
+          document.getElementById("success-message").textContent = message;
         })
         .catch((error) => {
           errorMessage.textContent = error.message;
