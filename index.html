@@ -287,7 +287,7 @@
       submitButton.disabled = true;
       submitButton.textContent = "Wird gesendet...";
 
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec", {
         method: "POST",
         body: formData,
       })
@@ -313,7 +313,7 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
 
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
+      fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Fehler beim Abrufen der Benutzerliste.");
@@ -356,7 +356,7 @@
 
     // Benutzer löschen
     function deleteUser(userId) {
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec", {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
       })
@@ -377,7 +377,7 @@
     function deleteAllUsers() {
       if (!confirm("Möchtest du wirklich alle Benutzer löschen?")) return;
 
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec", {
         method: "POST",
         body: JSON.stringify({ action: "deleteAll" }),
       })
@@ -396,7 +396,7 @@
     function deleteAllUsersAndReset() {
       if (!confirm("Möchtest du wirklich alle Benutzer löschen? Dadurch können sich alle erneut anmelden.")) return;
 
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxoNQwmJZXzLH8ShgCA20vfyWDSTen97PbSbWfRjkGyiptOPYyynSleE0U3lnrtwCs7/exec", {
         method: "POST",
         body: JSON.stringify({ action: "deleteAll" }),
       })
