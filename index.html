@@ -354,7 +354,7 @@
     }
 
     function fetchRegisteredUsers() {
-      fetch("https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec")
+      fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec")
         .then(response => response.json())
         .then(data => {
           const users = data.users || [];
@@ -422,15 +422,20 @@
     function deleteAllUsers() {
       showConfirmationDialog("Möchten Sie wirklich alle Benutzer löschen?", (confirmed) => {
         if (confirmed) {
-          fetch("https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec", {
-            method: "DELETE",
+          fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              action: "deleteAllUsers",
+            }),
           })
-            .then(response => {
-              if (response.ok) {
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === "success") {
                 showStatusMessage("Alle Benutzer wurden erfolgreich gelöscht.");
                 fetchRegisteredUsers(); // Aktualisiere die Tabelle
               } else {
-                showStatusMessage("Fehler beim Löschen der Benutzer.", true);
+                showStatusMessage(`Fehler: ${data.message}`, true);
               }
             })
             .catch(() => {
@@ -444,8 +449,13 @@
     function deleteUser(username) {
       showConfirmationDialog(`Möchten Sie den Benutzer "${username}" wirklich löschen?`, (confirmed) => {
         if (confirmed) {
-          fetch(`https://script.google.com/macros/s/AKfycbz5pH5_rDQUm3GXJ6RNZ8sVcUbVuRSF_TbNPUAekZECeiZyWehP5TRvZGb9jcouWjKc/exec?username=${encodeURIComponent(username)}`, {
-            method: "DELETE",
+          fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              action: "deleteUser",
+              username: username,
+            }),
           })
             .then(response => response.json())
             .then(data => {
