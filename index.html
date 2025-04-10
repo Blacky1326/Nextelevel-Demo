@@ -411,7 +411,7 @@
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbyrANS1TlUliaDI15vG3dTBM1qgtvGFmaFs7g6RioHmnupsjHQ5HSS88ZC7jgXxPmjpEQ/exec`, {
+      fetch(`https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec`, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
       })
@@ -443,7 +443,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbyrANS1TlUliaDI15vG3dTBM1qgtvGFmaFs7g6RioHmnupsjHQ5HSS88ZC7jgXxPmjpEQ/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec", {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
