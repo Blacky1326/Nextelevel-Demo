@@ -58,41 +58,10 @@
         <input type="text" id="name" class="w-full p-2 rounded bg-gray-800 text-white" required>
       </div>
       <div class="mb-4">
-        <label for="rank" class="block text-sm font-medium">Rank:</label>
-        <select id="rank" class="w-full p-2 rounded bg-gray-800 text-white">
-          <option value="" disabled selected>Wähle deinen Rank</option>
-          <option value="Bronze 5">Bronze 5</option>
-          <option value="Bronze 4">Bronze 4</option>
-          <option value="Bronze 3">Bronze 3</option>
-          <option value="Bronze 2">Bronze 2</option>
-          <option value="Bronze 1">Bronze 1</option>
-          <option value="Silber 5">Silber 5</option>
-          <option value="Silber 4">Silber 4</option>
-          <option value="Silber 3">Silber 3</option>
-          <option value="Silber 2">Silber 2</option>
-          <option value="Silber 1">Silber 1</option>
-          <option value="Gold 5">Gold 5</option>
-          <option value="Gold 4">Gold 4</option>
-          <option value="Gold 3">Gold 3</option>
-          <option value="Gold 2">Gold 2</option>
-          <option value="Gold 1">Gold 1</option>
-          <option value="Platin 5">Platin 5</option>
-          <option value="Platin 4">Platin 4</option>
-          <option value="Platin 3">Platin 3</option>
-          <option value="Platin 2">Platin 2</option>
-          <option value="Platin 1">Platin 1</option>
-          <option value="Diamant 5">Diamant 5</option>
-          <option value="Diamant 4">Diamant 4</option>
-          <option value="Diamant 3">Diamant 3</option>
-          <option value="Diamant 2">Diamant 2</option>
-          <option value="Diamant 1">Diamant 1</option>
-          <option value="Master 5">Master 5</option>
-          <option value="Master 4">Master 4</option>
-          <option value="Master 3">Master 3</option>
-          <option value="Master 2">Master 2</option>
-          <option value="Master 1">Master 1</option>
-          <option value="Pankmaster">Pankmaster</option>
-        </select>
+        <label class="block text-sm font-medium">Rank:</label>
+        <div id="rank-options" class="flex flex-wrap">
+          <!-- Ranks werden dynamisch generiert -->
+        </div>
       </div>
       <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded">Anmelden</button>
       <p id="registration-message" class="mt-4 text-sm"></p>
@@ -110,21 +79,43 @@
       <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded">Login</button>
     </form>
     <div id="admin-actions" class="hidden w-full">
-      <button id="delete-user" class="bg-red-600 text-white px-4 py-2 rounded mb-4 w-full">User löschen</button>
-      <button id="delete-all-users" class="bg-red-600 text-white px-4 py-2 rounded w-full">Alle User löschen</button>
+      <button id="delete-user" class="bg-red-600 text-white px-4 py-2 rounded mb-4 w-full">Benutzer löschen</button>
+      <button id="delete-all-users" class="bg-red-600 text-white px-4 py-2 rounded w-full">Alle Benutzer
+        löschen</button>
     </div>
   </section>
 
-  <!-- Discord Server Sektion -->
-  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full mb-10">
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full">
     <a href="https://discord.gg/fragpunkde" target="_blank"
       class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/qJT9QwP.png" alt="Fragpunk Logo" class="w-12 h-12 mb-2">
       Spiel Fragpunk
       <div id="fragpunk-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
-      <div id="fragpunk-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
-    <!-- Weitere Discord Server hier -->
+    <a href="https://discord.gg/NPy3qwW7dE" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+      <img src="https://i.imgur.com/g9vzzYh.jpeg" alt="Marvel Logo" class="w-12 h-12 mb-2">
+      Spiel Marvel Rivals
+      <div id="marvel-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+    </a>
+    <a href="https://discord.gg/NFwBBc94" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+      <img src="https://i.imgur.com/FLsEolX.png" alt="Battlefield Logo" class="w-12 h-12 mb-2">
+      Spiel Battlefield Labs
+      <div id="battlefield-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+    </a>
+    <a href="https://discord.gg/2EWXJnuRby" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+      <img src="https://i.imgur.com/fcyYWpM.png" alt="MechaBREAK Logo" class="w-12 h-12 mb-2">
+      Spiel MechaBREAK
+      <div id="mechabreak-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+    </a>
+    <a href="https://discord.gg/AC6JUGnwTH" target="_blank"
+      class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
+      <img src="https://i.imgur.com/AvqJ0bp.png" alt="COD Warzone Logo" class="w-12 h-12 mb-2">
+      Call of Duty Warzone
+      <div id="cod-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+    </a>
   </section>
 
   <footer class="mt-12 text-gray-500 text-sm">
@@ -133,11 +124,11 @@
 
   <script>
     const serverData = [
-      { id: "1325249120918704168", elementId: "fragpunk-users", teamElementId: "fragpunk-team", team: ["User1", "User2"] },
-      { id: "1314605130342989885", elementId: "marvel-users", teamElementId: "marvel-team", team: ["User3", "User4"] },
-      { id: "1328517357550698576", elementId: "battlefield-users", teamElementId: "battlefield-team", team: ["User5"] },
-      { id: "1327026998534737952", elementId: "mechabreak-users", teamElementId: "mechabreak-team", team: ["User6", "User7"] },
-      { id: "690916074773938236", elementId: "cod-users", teamElementId: "cod-team", team: ["User8"] },
+      { id: "1325249120918704168", elementId: "fragpunk-users" },
+      { id: "1314605130342989885", elementId: "marvel-users" },
+      { id: "1328517357550698576", elementId: "battlefield-users" },
+      { id: "1327026998534737952", elementId: "mechabreak-users" },
+      { id: "690916074773938236", elementId: "cod-users" },
     ];
 
     const totalUsersElement = document.getElementById("total-users");
@@ -151,56 +142,76 @@
           totalUsers += activeUsers;
           document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
           totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
-
-          // Zeige Teammitglieder an
-          const teamElement = document.getElementById(server.teamElementId);
-          teamElement.textContent = `Team: ${server.team.join(", ")}`;
         })
         .catch(() => {
           document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
-          const teamElement = document.getElementById(server.teamElementId);
-          teamElement.textContent = "Fehler beim Laden der Teammitglieder";
         });
     });
 
-    // Google Apps Script Web-App URL
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2AYcR-yC4NMWQYKcpmlYH7XKsEC08vXOHYbCc2-IGqkxrU2UfPSmG1XglGCCp2MD2/exec";
+
+    // Ranks
+    const ranks = [
+      "Bronze 5", "Bronze 4", "Bronze 3", "Bronze 2", "Bronze 1",
+      "Silber 5", "Silber 4", "Silber 3", "Silber 2", "Silber 1",
+      "Gold 5", "Gold 4", "Gold 3", "Gold 2", "Gold 1",
+      "Platin 5", "Platin 4", "Platin 3", "Platin 2", "Platin 1",
+      "Diamant 5", "Diamant 4", "Diamant 3", "Diamant 2", "Diamant 1",
+      "Master 5", "Master 4", "Master 3", "Master 2", "Master 1",
+      "Pankmaster"
+    ];
+
+    // Generate rank options
+    const rankOptionsContainer = document.getElementById("rank-options");
+    ranks.forEach(rank => {
+      const rankOption = document.createElement("div");
+      rankOption.className = "rank-option bg-gray-800 text-white p-2 rounded m-1 cursor-pointer";
+      rankOption.textContent = rank;
+      rankOption.addEventListener("click", () => {
+        document.querySelectorAll(".rank-option").forEach(option => option.classList.remove("bg-purple-600"));
+        rankOption.classList.add("bg-purple-600");
+      });
+      rankOptionsContainer.appendChild(rankOption);
+    });
 
     // Registration form
     const registrationForm = document.getElementById("registration-form");
     const registrationMessage = document.getElementById("registration-message");
+    const registeredUsers = new Set();
 
     registrationForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value.trim();
-      const rank = document.getElementById("rank").value;
+      const selectedRank = document.querySelector(".rank-option.bg-purple-600");
 
-      if (!rank) {
+      if (!selectedRank) {
         registrationMessage.textContent = "Bitte wähle einen Rank aus.";
         registrationMessage.style.color = "red";
         return;
       }
 
-      // Senden der Daten an Google Apps Script
+      if (registeredUsers.has(name)) {
+        registrationMessage.textContent = "Du hast dich bereits angemeldet.";
+        registrationMessage.style.color = "red";
+        return;
+      }
+
+      registeredUsers.add(name);
+      registrationMessage.textContent = "Du hast dich erfolgreich angemeldet!";
+      registrationMessage.style.color = "green";
+
+      // Speichern in Google Sheets
       fetch(SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "register", name, rank }),
+        body: JSON.stringify({ username: name, rank: selectedRank.textContent }),
         headers: { "Content-Type": "application/json" }
       })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-          if (data.success) {
-            registrationMessage.textContent = "Du hast dich erfolgreich angemeldet!";
-            registrationMessage.style.color = "green";
-          } else {
-            registrationMessage.textContent = data.message || "Fehler bei der Anmeldung.";
-            registrationMessage.style.color = "red";
-          }
+          console.log("Erfolgreich gespeichert:", data);
         })
         .catch(error => {
-          console.error("Fehler:", error);
-          registrationMessage.textContent = "Fehler bei der Anmeldung.";
-          registrationMessage.style.color = "red";
+          console.error("Fehler beim Speichern:", error);
         });
     });
 
@@ -225,34 +236,32 @@
       if (name) {
         fetch(SCRIPT_URL, {
           method: "POST",
-          body: JSON.stringify({ action: "deleteUser", name }),
+          body: JSON.stringify({ action: "deleteUser", username: name }),
           headers: { "Content-Type": "application/json" }
         })
-          .then(response => response.json())
+          .then(response => response.text())
           .then(data => {
-            alert(data.message || "User wurde gelöscht.");
+            alert(data || "Benutzer wurde gelöscht.");
           })
           .catch(error => {
-            console.error("Fehler:", error);
-            alert("Fehler beim Löschen des Users.");
+            console.error("Fehler beim Löschen:", error);
           });
       }
     });
 
     document.getElementById("delete-all-users").addEventListener("click", () => {
-      if (confirm("Möchtest du wirklich alle User löschen?")) {
+      if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
         fetch(SCRIPT_URL, {
           method: "POST",
           body: JSON.stringify({ action: "deleteAllUsers" }),
           headers: { "Content-Type": "application/json" }
         })
-          .then(response => response.json())
+          .then(response => response.text())
           .then(data => {
-            alert(data.message || "Alle User wurden gelöscht.");
+            alert(data || "Alle Benutzer wurden gelöscht.");
           })
           .catch(error => {
-            console.error("Fehler:", error);
-            alert("Fehler beim Löschen aller User.");
+            console.error("Fehler beim Löschen aller Benutzer:", error);
           });
       }
     });
