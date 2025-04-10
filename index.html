@@ -337,6 +337,9 @@
             form.reset();
             localStorage.setItem("tournamentRegistered", "true");
             errorMessage.classList.add("hidden"); // Fehlermeldung ausblenden
+            const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+            registeredUsers.push(username);
+            localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
           } else {
             errorMessage.textContent = "Fehler bei der Anmeldung. Bitte versuche es erneut.";
             errorMessage.classList.remove("hidden");
@@ -378,7 +381,7 @@
       }
     });
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3tjnKS1aguNVPcIfyT7FSYQB_elIWbVFUfpJi8L7JM7nk9eqoH6HCbqLEJsa3IBOvdA/exec"; // Ersetze durch die Web-App-URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXkwzhELDIiTd8edURE0R1waBe37M5hqlMHOvbQUHcr5fGy-IYDmgEpSf4Rk8a63yz/exec"; // Ersetze durch die Web-App-URL
 
     function loadUserList() {
       fetch(SCRIPT_URL)
@@ -397,7 +400,10 @@
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Löschen";
             deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
-            deleteButton.onclick = () => deleteUser(user.id);
+            deleteButton.onclick = () => {
+              deleteUser(user.id);
+              removeFromLocalStorage(user.username);
+            };
 
             listItem.appendChild(userInfo);
             listItem.appendChild(deleteButton);
@@ -430,6 +436,37 @@
           alert("Serverfehler. Bitte später erneut versuchen.");
         });
     }
+
+    function deleteAllUsers() {
+      if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteAll" }),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert(data.message || "Alle Benutzer wurden gelöscht.");
+              loadUserList(); // Benutzerliste aktualisieren
+              localStorage.clear(); // Alle Benutzer aus localStorage löschen
+            } else {
+              alert(data.message || "Fehler beim Löschen der Benutzer.");
+            }
+          })
+          .catch(() => {
+            alert("Serverfehler. Bitte später erneut versuchen.");
+          });
+      }
+    }
+
+    function removeFromLocalStorage(username) {
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const updatedUsers = registeredUsers.filter((user) => user !== username);
+      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
+    }
+
+    document.getElementById("delete-all-users").addEventListener("click", deleteAllUsers);
 
     document.getElementById("search-user").addEventListener("input", function () {
       const searchValue = this.value.toLowerCase();
