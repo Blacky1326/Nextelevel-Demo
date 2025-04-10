@@ -286,7 +286,7 @@
       formData.append("username", username);
       formData.append("rank", rank);
 
-      fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzP8tqLyOFFpQrYT996rDAw2E5FQUaokzmoV0wcuu3TKwzirbP-fnBpMLvixjUAAqh0/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -320,7 +320,7 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
 
-      fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec")
+      fetch("https://script.google.com/macros/s/AKfycbzP8tqLyOFFpQrYT996rDAw2E5FQUaokzmoV0wcuu3TKwzirbP-fnBpMLvixjUAAqh0/exec")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Fehler beim Abrufen der Benutzerliste.");
@@ -363,7 +363,7 @@
 
     // Benutzer löschen
     function deleteUser(userId) {
-      fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzP8tqLyOFFpQrYT996rDAw2E5FQUaokzmoV0wcuu3TKwzirbP-fnBpMLvixjUAAqh0/exec", {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
       })
@@ -384,7 +384,7 @@
     function deleteAllUsers() {
       if (!confirm("Möchtest du wirklich alle Benutzer löschen?")) return;
 
-      fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzP8tqLyOFFpQrYT996rDAw2E5FQUaokzmoV0wcuu3TKwzirbP-fnBpMLvixjUAAqh0/exec", {
         method: "POST",
         body: JSON.stringify({ action: "deleteAll" }),
       })
@@ -403,7 +403,7 @@
     function deleteAllUsersAndReset() {
       if (!confirm("Möchtest du wirklich alle Benutzer löschen? Dadurch können sich alle erneut anmelden.")) return;
 
-      fetch("https://script.google.com/macros/s/AKfycbzvcY-e4JtxI6Wwess4j21Eyqs9lXYYe8iL-cMM8Icy5CbWbEuHFGj2Wps-IqA9W3o/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzP8tqLyOFFpQrYT996rDAw2E5FQUaokzmoV0wcuu3TKwzirbP-fnBpMLvixjUAAqh0/exec", {
         method: "POST",
         body: JSON.stringify({ action: "deleteAll" }),
       })
