@@ -57,8 +57,7 @@ function doDelete(e) {
     };
 
     return ContentService.createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify(response));
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     const response = {
       status: "error",
@@ -66,8 +65,7 @@ function doDelete(e) {
     };
 
     return ContentService.createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify(response));
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
