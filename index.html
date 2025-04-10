@@ -378,7 +378,7 @@
       }
     });
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMZH1t2vn3t5BsMonR4EpOGCor2wurBxn2j4Y5LD47Jt3pCCIuSO9HvayOOrKKhIyS4Q/exec"; // Ersetze durch die Web-App-URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUULib6g6ksuOHQZ2BN0ZTOSWVs41-dnCNZBsiZijlQzJu8cBEErWo_Kf4bzXxJBfLiA/exec"; // Ersetze durch die Web-App-URL
 
     function loadUserList() {
       fetch(SCRIPT_URL)
@@ -447,7 +447,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbwMZH1t2vn3t5BsMonR4EpOGCor2wurBxn2j4Y5LD47Jt3pCCIuSO9HvayOOrKKhIyS4Q/exec", {
+        fetch(SCRIPT_URL, {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
