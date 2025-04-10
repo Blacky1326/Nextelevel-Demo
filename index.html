@@ -257,6 +257,7 @@
   </div>
 
   <script>
+    // Admin-Login
     function showAdminLogin() {
       document.getElementById("admin-modal").style.display = "flex";
     }
@@ -280,6 +281,7 @@
       }
     });
 
+    // Benutzerliste laden
     function loadUserList() {
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
@@ -312,6 +314,7 @@
         });
     }
 
+    // Benutzer löschen
     function deleteUser(userId) {
       fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
         method: "POST",
@@ -329,6 +332,51 @@
         });
     }
 
+    // Anmeldung
+    document.getElementById("tournament-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const errorMessage = document.getElementById("error-message");
+      const submitButton = event.target.querySelector("button[type='submit']");
+
+      // Überprüfen, ob der Benutzer bereits angemeldet ist
+      if (localStorage.getItem("tournamentRegistered")) {
+        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
+        errorMessage.classList.remove("hidden");
+        return;
+      }
+
+      const formData = new FormData(event.target);
+
+      // Button deaktivieren, um Mehrfachklicks zu verhindern
+      submitButton.disabled = true;
+      submitButton.textContent = "Wird gesendet...";
+
+      fetch(event.target.action, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            document.getElementById("tournament-modal").style.display = "none"; // Fenster schließen
+            localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
+            errorMessage.classList.add("hidden");
+          } else {
+            errorMessage.textContent = "Fehler bei der Anmeldung. Bitte versuche es erneut.";
+            errorMessage.classList.remove("hidden");
+          }
+          submitButton.disabled = false;
+          submitButton.textContent = "Anmelden";
+        })
+        .catch(() => {
+          errorMessage.textContent = "Serverfehler. Bitte später erneut versuchen.";
+          errorMessage.classList.remove("hidden");
+          submitButton.disabled = false;
+          submitButton.textContent = "Anmelden";
+        });
+    });
+
+    // Suchfunktion in der Benutzerliste
     document.getElementById("search-user").addEventListener("input", function () {
       const searchValue = this.value.toLowerCase();
       const userListItems = document.querySelectorAll("#user-list li");
