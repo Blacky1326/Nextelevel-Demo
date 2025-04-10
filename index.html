@@ -354,7 +354,7 @@
     }
 
     function fetchRegisteredUsers() {
-      fetch("https://script.google.com/macros/s/AKfycbx2A5gd7GyQW1tD8tMY9TVja6ikgPVfJcJ_T2eItxzCWlvUKZrqkzUgRVxPyayjuRMV/exec")
+      fetch("https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec")
         .then(response => response.json())
         .then(data => {
           const users = data.users || [];
@@ -422,7 +422,7 @@
     function deleteAllUsers() {
       showConfirmationDialog("Möchten Sie wirklich alle Benutzer löschen?", (confirmed) => {
         if (confirmed) {
-          fetch("https://script.google.com/macros/s/AKfycbx2A5gd7GyQW1tD8tMY9TVja6ikgPVfJcJ_T2eItxzCWlvUKZrqkzUgRVxPyayjuRMV/exec", {
+          fetch("https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec", {
             method: "DELETE",
           })
             .then(response => {
@@ -444,7 +444,7 @@
     function deleteUser(index) {
       showConfirmationDialog("Möchten Sie diesen Benutzer wirklich löschen?", (confirmed) => {
         if (confirmed) {
-          fetch(`https://script.google.com/macros/s/AKfycbx2A5gd7GyQW1tD8tMY9TVja6ikgPVfJcJ_T2eItxzCWlvUKZrqkzUgRVxPyayjuRMV/exec?index=${index}`, {
+          fetch(`https://script.google.com/macros/s/AKfycby_i5fQ2jpvzEkz69K9mfZQDJ7lMrSY2SHi-6OU5JzSfH7YcO82La13PyJW5xG2boHX/exec?index=${index}`, {
             method: "DELETE",
           })
             .then(response => {
