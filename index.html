@@ -253,6 +253,11 @@
       <ul id="user-list" class="space-y-4">
         <!-- Benutzer werden hier dynamisch eingefügt -->
       </ul>
+      <div class="mt-6 text-center">
+        <button onclick="deleteAllUsers()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+          Alle Benutzer löschen
+        </button>
+      </div>
     </div>
   </div>
 
@@ -294,6 +299,14 @@
           return response.json();
         })
         .then((data) => {
+          if (data.length === 0) {
+            const emptyMessage = document.createElement("li");
+            emptyMessage.textContent = "Keine Benutzer gefunden.";
+            emptyMessage.className = "text-gray-400";
+            userList.appendChild(emptyMessage);
+            return;
+          }
+
           data.forEach((user) => {
             const listItem = document.createElement("li");
             listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
@@ -328,6 +341,25 @@
         .then((response) => {
           if (!response.ok) {
             throw new Error("Fehler beim Löschen des Benutzers.");
+          }
+          loadUserList(); // Liste aktualisieren
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+
+    // Alle Benutzer löschen
+    function deleteAllUsers() {
+      if (!confirm("Möchtest du wirklich alle Benutzer löschen?")) return;
+
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteAll" }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Löschen aller Benutzer.");
           }
           loadUserList(); // Liste aktualisieren
         })
@@ -423,6 +455,26 @@
           document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
         });
     });
+
+    function doPost(e) {
+      const { action, id } = JSON.parse(e.postData.contents);
+      const sheet = SpreadsheetApp.openById("DEINE_SPREADSHEET_ID").getSheetByName("Fragpunk Anmeldung");
+
+      if (action === "delete") {
+        sheet.deleteRow(Number(id) + 1); // +1 wegen der Kopfzeile
+        return ContentService.createTextOutput("Benutzer gelöscht.");
+      }
+
+      if (action === "deleteAll") {
+        const lastRow = sheet.getLastRow();
+        if (lastRow > 1) {
+          sheet.deleteRows(2, lastRow - 1); // Alle Zeilen außer der Kopfzeile löschen
+        }
+        return ContentService.createTextOutput("Alle Benutzer gelöscht.");
+      }
+
+      return ContentService.createTextOutput("Ungültige Aktion.");
+    }
   </script>
 </body>
 
