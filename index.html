@@ -216,7 +216,8 @@
         <!-- Benutzer werden hier dynamisch eingefügt -->
       </ul>
       <div class="mt-6 text-center">
-        <button onclick="deleteAllUsers()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+        <button onclick="deleteAllUsersAndReset()"
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
           Alle Benutzer löschen
         </button>
       </div>
@@ -274,6 +275,7 @@
       const errorMessage = document.getElementById("error-message");
       const submitButton = event.target.querySelector("button[type='submit']");
 
+      // Überprüfen, ob der Benutzer bereits angemeldet ist
       if (localStorage.getItem("tournamentRegistered")) {
         errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
         errorMessage.classList.remove("hidden");
@@ -292,7 +294,7 @@
         .then((response) => {
           if (!response.ok) throw new Error("Fehler bei der Anmeldung.");
           document.getElementById("tournament-modal").style.display = "none";
-          localStorage.setItem("tournamentRegistered", "true");
+          localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
           errorMessage.classList.add("hidden");
           document.getElementById("success-message").textContent = "Erfolgreich für das Turnier angemeldet!";
         })
@@ -362,6 +364,8 @@
           if (!response.ok) {
             throw new Error("Fehler beim Löschen des Benutzers.");
           }
+          // Lokalen Schutzmechanismus für den Benutzer zurücksetzen
+          localStorage.removeItem("tournamentRegistered");
           loadUserList(); // Liste aktualisieren
         })
         .catch((error) => {
@@ -388,6 +392,28 @@
         });
     }
 
+    // Alle Benutzer löschen und Schutz zurücksetzen
+    function deleteAllUsersAndReset() {
+      if (!confirm("Möchtest du wirklich alle Benutzer löschen? Dadurch können sich alle erneut anmelden.")) return;
+
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteAll" }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Löschen aller Benutzer.");
+          }
+          // Lokalen Schutzmechanismus zurücksetzen
+          localStorage.removeItem("tournamentRegistered");
+          alert("Alle Benutzer wurden gelöscht. Benutzer können sich jetzt erneut anmelden.");
+          loadUserList(); // Liste aktualisieren
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+
     // Admin-Login
     function showAdminLogin() {
       document.getElementById("admin-modal").style.display = "flex";
@@ -404,10 +430,14 @@
       const password = document.getElementById("admin-password").value;
 
       if (username === "Admin" && password === "1326") {
-        hideAdminLogin();
-        alert("Erfolgreich eingeloggt!"); // Hier kannst du die Benutzerliste laden
+        hideAdminLogin(); // Schließt das Login-Modal
+        document.getElementById("user-list-modal").classList.remove("hidden"); // Zeigt das Admin-Panel an
+        loadUserList(); // Lädt die Benutzerliste
       } else {
-        alert("Falscher Benutzername oder Passwort!");
+        const errorMessage = document.createElement("div");
+        errorMessage.textContent = "Falscher Benutzername oder Passwort!";
+        errorMessage.className = "text-red-500 text-sm mt-4";
+        document.getElementById("admin-login-form").appendChild(errorMessage);
       }
     });
 
