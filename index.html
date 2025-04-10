@@ -147,7 +147,7 @@
 
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
     <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
+      action="https://script.google.com/macros/s/AKfycbzhIjEYpvZaavgVCa1HBhOXw-MFKIhuo1_OJA16-jXslKTh1lxg50QK49ytgmYMkEWU/exec"
       method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
       <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung - Fragpunk</h2>
@@ -382,7 +382,7 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = ""; // Liste zurücksetzen
 
-      fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec")
+      fetch("https://script.google.com/macros/s/AKfycbzhIjEYpvZaavgVCa1HBhOXw-MFKIhuo1_OJA16-jXslKTh1lxg50QK49ytgmYMkEWU/exec")
         .then((response) => response.json())
         .then((data) => {
           data.forEach((user) => {
@@ -410,14 +410,27 @@
         });
     }
 
+    function removeFromLocalStorage(username) {
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const updatedUsers = registeredUsers.filter((user) => user !== username);
+      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
+    }
+
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec`, {
+      fetch(`https://script.google.com/macros/s/AKfycbzhIjEYpvZaavgVCa1HBhOXw-MFKIhuo1_OJA16-jXslKTh1lxg50QK49ytgmYMkEWU/exec`, {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
+        headers: { "Content-Type": "application/json" },
       })
-        .then((response) => {
-          if (response.ok) {
-            loadUserList(); // Liste aktualisieren
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // Benutzer aus localStorage entfernen
+            const username = data.username; // Server gibt den Benutzernamen zurück
+            removeFromLocalStorage(username);
+
+            // Benutzerliste aktualisieren
+            loadUserList();
           } else {
             alert("Fehler beim Löschen des Benutzers.");
           }
@@ -443,7 +456,7 @@
 
     document.getElementById("delete-all-users").addEventListener("click", function () {
       if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch("https://script.google.com/macros/s/AKfycbwf574upuOWRWa3F50RupXrdGWgJxhWJijpprRYR9jZtbYjkIgzrnUN2y-g6JHkesBI/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbzhIjEYpvZaavgVCa1HBhOXw-MFKIhuo1_OJA16-jXslKTh1lxg50QK49ytgmYMkEWU/exec", {
           method: "POST",
           body: JSON.stringify({ action: "deleteAll" }),
           headers: { "Content-Type": "application/json" },
@@ -452,7 +465,12 @@
           .then((data) => {
             if (data.success) {
               alert(data.message || "Alle Benutzer wurden gelöscht.");
-              loadUserList(); // Benutzerliste aktualisieren
+
+              // localStorage leeren
+              localStorage.removeItem("registeredUsers");
+
+              // Benutzerliste aktualisieren
+              loadUserList();
             } else {
               alert(data.message || "Fehler beim Löschen der Benutzer.");
             }
