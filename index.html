@@ -287,7 +287,12 @@
       userList.innerHTML = ""; // Liste zurücksetzen
 
       fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Abrufen der Benutzerliste.");
+          }
+          return response.json();
+        })
         .then((data) => {
           data.forEach((user) => {
             const listItem = document.createElement("li");
@@ -306,9 +311,9 @@
             userList.appendChild(listItem);
           });
         })
-        .catch(() => {
+        .catch((error) => {
           const errorItem = document.createElement("li");
-          errorItem.textContent = "Fehler beim Abrufen der Benutzerliste.";
+          errorItem.textContent = error.message;
           errorItem.className = "text-red-500";
           userList.appendChild(errorItem);
         });
@@ -321,14 +326,13 @@
         body: JSON.stringify({ action: "delete", id: userId }),
       })
         .then((response) => {
-          if (response.ok) {
-            loadUserList(); // Liste aktualisieren
-          } else {
-            alert("Fehler beim Löschen des Benutzers.");
+          if (!response.ok) {
+            throw new Error("Fehler beim Löschen des Benutzers.");
           }
+          loadUserList(); // Liste aktualisieren
         })
-        .catch(() => {
-          alert("Serverfehler. Bitte später erneut versuchen.");
+        .catch((error) => {
+          alert(error.message);
         });
     }
 
@@ -357,20 +361,18 @@
         body: formData,
       })
         .then((response) => {
-          if (response.ok) {
-            document.getElementById("tournament-modal").style.display = "none"; // Fenster schließen
-            localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
-            errorMessage.classList.add("hidden");
-          } else {
-            errorMessage.textContent = "Fehler bei der Anmeldung. Bitte versuche es erneut.";
-            errorMessage.classList.remove("hidden");
+          if (!response.ok) {
+            throw new Error("Fehler bei der Anmeldung.");
           }
-          submitButton.disabled = false;
-          submitButton.textContent = "Anmelden";
+          document.getElementById("tournament-modal").style.display = "none"; // Fenster schließen
+          localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
+          errorMessage.classList.add("hidden");
         })
-        .catch(() => {
-          errorMessage.textContent = "Serverfehler. Bitte später erneut versuchen.";
+        .catch((error) => {
+          errorMessage.textContent = error.message;
           errorMessage.classList.remove("hidden");
+        })
+        .finally(() => {
           submitButton.disabled = false;
           submitButton.textContent = "Anmelden";
         });
@@ -391,6 +393,7 @@
       });
     });
 
+    // Discord-User laden
     const serverData = [
       { id: "1325249120918704168", elementId: "fragpunk-users" },
       { id: "1314605130342989885", elementId: "marvel-users" },
@@ -404,7 +407,12 @@
 
     serverData.forEach((server) => {
       fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Laden der Nutzer.");
+          }
+          return response.json();
+        })
         .then((data) => {
           const activeUsers = data.presence_count || 0;
           totalUsers += activeUsers;
@@ -415,17 +423,6 @@
           document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
         });
     });
-
-    function doGet() {
-      const sheet = SpreadsheetApp.openById("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec").getSheetByName("Fragpunk Anmeldung");
-      const rows = sheet.getDataRange().getValues();
-      const data = rows.slice(1).map((row, index) => ({
-        id: index + 1,
-        username: row[0],
-        rank: row[1],
-      }));
-      return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
-    }
   </script>
 </body>
 
