@@ -1,66 +1,23 @@
-const SHEET_ID = "1Zx51WFIAprs00YtCm6wfuIUgY7uwRtlPx17UVObC124"; // Ersetze durch die ID deines Google Sheets
-const SHEET_NAME = "Fragpunk Anmeldung"; // Ersetze durch den Namen des Tabs in deinem Google Sheet
-
-function doGet() {
-  try {
-    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-    if (!sheet) {
-      throw new Error(`Sheet mit dem Namen "${SHEET_NAME}" wurde nicht gefunden.`);
-    }
-
-    const rows = sheet.getDataRange().getValues();
-    const data = rows.slice(1).map((row, index) => ({
-      id: index + 1,
-      username: row[0],
-      rank: row[1],
-    }));
-
-    return ContentService.createTextOutput(JSON.stringify(data))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService.createTextOutput(
-      JSON.stringify({ success: false, message: error.message })
-    ).setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
 function doPost(e) {
   try {
-    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-    if (!sheet) {
-      throw new Error(`Sheet mit dem Namen "${SHEET_NAME}" wurde nicht gefunden.`);
-    }
+    // Open the Google Sheet by its ID
+    const sheet = SpreadsheetApp.openById("YOUR_SHEET_ID").getActiveSheet();
 
-    const data = JSON.parse(e.postData.contents);
+    // Extract form data
+    const username = e.parameter.username;
+    const rank = e.parameter.rank;
 
-    if (data.action === "add") {
-      sheet.appendRow([data.username, data.rank]);
-      return ContentService.createTextOutput(
-        JSON.stringify({ success: true, message: "Benutzer hinzugefügt." })
-      ).setMimeType(ContentService.MimeType.JSON);
-    } else if (data.action === "delete") {
-      const rowIndex = Number(data.id) + 1; // +1 wegen der Kopfzeile
-      const username = sheet.getRange(rowIndex, 1).getValue(); // Benutzername aus der ersten Spalte
-      sheet.deleteRow(rowIndex);
-      return ContentService.createTextOutput(
-        JSON.stringify({ success: true, message: "Benutzer gelöscht.", username: username })
-      ).setMimeType(ContentService.MimeType.JSON);
-    } else if (data.action === "deleteAll") {
-      const lastRow = sheet.getLastRow();
-      if (lastRow > 1) {
-        sheet.deleteRows(2, lastRow - 1); // Alle Zeilen außer der Kopfzeile löschen
-      }
-      return ContentService.createTextOutput(
-        JSON.stringify({ success: true, message: "Alle Benutzer wurden gelöscht." })
-      ).setMimeType(ContentService.MimeType.JSON);
-    }
+    // Append the data to the sheet
+    sheet.appendRow([new Date(), username, rank]);
 
+    // Return a success response
     return ContentService.createTextOutput(
-      JSON.stringify({ success: false, message: "Ungültige Aktion." })
+      JSON.stringify({ status: "success", message: "Data saved successfully" })
     ).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
+    // Handle errors and return a failure response
     return ContentService.createTextOutput(
-      JSON.stringify({ success: false, message: error.message })
+      JSON.stringify({ status: "error", message: error.message })
     ).setMimeType(ContentService.MimeType.JSON);
   }
 }
