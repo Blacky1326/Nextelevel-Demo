@@ -378,7 +378,7 @@
       }
     });
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUULib6g6ksuOHQZ2BN0ZTOSWVs41-dnCNZBsiZijlQzJu8cBEErWo_Kf4bzXxJBfLiA/exec"; // Ersetze durch die Web-App-URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3tjnKS1aguNVPcIfyT7FSYQB_elIWbVFUfpJi8L7JM7nk9eqoH6HCbqLEJsa3IBOvdA/exec"; // Ersetze durch die Web-App-URL
 
     function loadUserList() {
       fetch(SCRIPT_URL)
@@ -435,9 +435,13 @@
       const searchValue = this.value.toLowerCase();
       const userListItems = document.querySelectorAll("#user-list li");
 
+      if (!userListItems.length) {
+        return; // Keine Benutzer in der Liste
+      }
+
       userListItems.forEach((item) => {
-        const userInfo = item.querySelector("span").textContent.toLowerCase();
-        if (userInfo.includes(searchValue)) {
+        const userInfo = item.querySelector("span");
+        if (userInfo && userInfo.textContent.toLowerCase().includes(searchValue)) {
           item.style.display = "flex";
         } else {
           item.style.display = "none";
