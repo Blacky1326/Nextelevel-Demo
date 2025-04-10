@@ -35,53 +35,6 @@
       opacity: 0.15;
       z-index: -2;
     }
-
-    select {
-      appearance: none;
-      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 4 5%22%3E%3Cpath fill%3D%22%23FFFFFF%22 d%3D%22M2 0L0 2h4z%22/%3E%3C/svg%3E');
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      background-size: 0.65em auto;
-    }
-
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 5px #9f4fff;
-    }
-
-    input:focus {
-      outline: none;
-      box-shadow: 0 0 5px #9f4fff;
-    }
-
-    #tournament-modal,
-    #admin-modal,
-    #user-list-modal {
-      backdrop-filter: blur(5px);
-    }
-
-    .bg-gradient-to-br {
-      background: linear-gradient(to bottom right, #4c1d95, #000000, #6b21a8);
-    }
-
-    input,
-    select {
-      transition: all 0.3s ease;
-    }
-
-    input:focus,
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 10px #9f4fff;
-    }
-
-    button {
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
   </style>
 </head>
 
@@ -93,11 +46,6 @@
     <p class="text-lg text-gray-300 max-w-xl">Nextlevel-Network bringt euch alle zu einem Nextlevel-Gaming aus ganz
       Deutschland, Österreich und der Schweiz</p>
     <div id="total-users" class="text-2xl text-green-400 mt-4">Lade aktive Nutzer...</div>
-    <div class="mt-6 flex justify-center gap-4">
-      <a href="/register.html"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Register</a>
-      <a href="/login.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Login</a>
-    </div>
   </header>
 
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full">
@@ -106,56 +54,59 @@
       <img src="https://i.imgur.com/qJT9QwP.png" alt="Fragpunk Logo" class="w-12 h-12 mb-2">
       Spiel Fragpunk
       <div id="fragpunk-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+      <div id="fragpunk-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
     <a href="https://discord.gg/NPy3qwW7dE" target="_blank"
       class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/g9vzzYh.jpeg" alt="Marvel Logo" class="w-12 h-12 mb-2">
       Spiel Marvel Rivals
       <div id="marvel-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+      <div id="marvel-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
     <a href="https://discord.gg/NFwBBc94" target="_blank"
       class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/FLsEolX.png" alt="Battlefield Logo" class="w-12 h-12 mb-2">
       Spiel Battlefield Labs
       <div id="battlefield-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+      <div id="battlefield-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
     <a href="https://discord.gg/2EWXJnuRby" target="_blank"
       class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/fcyYWpM.png" alt="MechaBREAK Logo" class="w-12 h-12 mb-2">
       Spiel MechaBREAK
       <div id="mechabreak-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+      <div id="mechabreak-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
     <a href="https://discord.gg/AC6JUGnwTH" target="_blank"
       class="bg-purple-800 rounded-2xl p-5 text-center glow-btn flex flex-col items-center">
       <img src="https://i.imgur.com/AvqJ0bp.png" alt="COD Warzone Logo" class="w-12 h-12 mb-2">
       Call of Duty Warzone
       <div id="cod-users" class="text-sm text-green-400">Lade aktive Nutzer...</div>
+      <div id="cod-team" class="text-xs text-gray-300 mt-2">Lade Teammitglieder...</div>
     </a>
   </section>
 
   <section class="mt-10 text-center">
-    <button onclick="document.getElementById('tournament-modal').style.display='flex'"
+    <!-- Turnier-Anmeldung Button -->
+    <button onclick="showTournamentModal()"
       class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
-      Turnier Anmeldung (Fragpunk)
+      Turnier Anmeldung
     </button>
-  </section>
 
-  <!-- Admin-Login Button -->
-  <section class="mt-10 text-center">
-    <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+    <!-- Admin-Login Button -->
+    <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-4">
       Admin Login
     </button>
   </section>
 
+  <!-- Turnier-Anmeldung Modal -->
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
     <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
-      method="post" onsubmit="redirectAfterSubmit(event)"
       class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
-      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung - Fragpunk</h2>
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Turnier Anmeldung</h2>
       <div id="error-message" class="text-red-500 text-sm mb-4 hidden"></div>
       <div class="mb-6">
-        <label for="username" class="block text-sm font-medium mb-2">Ingame Name:</label>
+        <label for="username" class="block text-sm font-medium mb-2">Name:</label>
         <input type="text" id="username" name="username"
           class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
           required>
@@ -166,41 +117,53 @@
           class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
           required>
           <option value="" disabled selected>Wähle deinen Rang</option>
-          <option value="Bronze 5">Bronze 5</option>
-          <option value="Bronze 4">Bronze 4</option>
-          <option value="Bronze 3">Bronze 3</option>
-          <option value="Bronze 2">Bronze 2</option>
-          <option value="Bronze 1">Bronze 1</option>
-          <option value="Silber 5">Silber 5</option>
-          <option value="Silber 4">Silber 4</option>
-          <option value="Silber 3">Silber 3</option>
-          <option value="Silber 2">Silber 2</option>
-          <option value="Silber 1">Silber 1</option>
-          <option value="Gold 5">Gold 5</option>
-          <option value="Gold 4">Gold 4</option>
-          <option value="Gold 3">Gold 3</option>
-          <option value="Gold 2">Gold 2</option>
-          <option value="Gold 1">Gold 1</option>
-          <option value="Platin 5">Platin 5</option>
-          <option value="Platin 4">Platin 4</option>
-          <option value="Platin 3">Platin 3</option>
-          <option value="Platin 2">Platin 2</option>
-          <option value="Platin 1">Platin 1</option>
-          <option value="Diamant 5">Diamant 5</option>
-          <option value="Diamant 4">Diamant 4</option>
-          <option value="Diamant 3">Diamant 3</option>
-          <option value="Diamant 2">Diamant 2</option>
-          <option value="Diamant 1">Diamant 1</option>
-          <option value="Master 5">Master 5</option>
-          <option value="Master 4">Master 4</option>
-          <option value="Master 3">Master 3</option>
-          <option value="Master 2">Master 2</option>
-          <option value="Master 1">Master 1</option>
+          <optgroup label="Bronze">
+            <option value="Bronze 5">Bronze 5</option>
+            <option value="Bronze 4">Bronze 4</option>
+            <option value="Bronze 3">Bronze 3</option>
+            <option value="Bronze 2">Bronze 2</0ption>
+            <option value="Bronze 1">Bronze 1</option>
+          </optgroup>
+          <optgroup label="Silber">
+            <option value="Silber 5">Silber 5</option>
+            <option value="Silber 4">Silber 4</option>
+            <option value="Silber 3">Silber 3</option>
+            <option value="Silber 2">Silber 2</option>
+            <option value="Silber 1">Silber 1</option>
+          </optgroup>
+          <optgroup label="Gold">
+            <option value="Gold 5">Gold 5</option>
+            <option value="Gold 4">Gold 4</option>
+            <option value="Gold 3">Gold 3</option>
+            <option value="Gold 2">Gold 2</option>
+            <option value="Gold 1">Gold 1</option>
+          </optgroup>
+          <optgroup label="Platin">
+            <option value="Platin 5">Platin 5</option>
+            <option value="Platin 4">Platin 4</option>
+            <option value="Platin 3">Platin 3</option>
+            <option value="Platin 2">Platin 2</option>
+            <option value="Platin 1">Platin 1</option>
+          </optgroup>
+          <optgroup label="Diamant">
+            <option value="Diamant 5">Diamant 5</option>
+            <option value="Diamant 4">Diamant 4</option>
+            <option value="Diamant 3">Diamant 3</option>
+            <option value="Diamant 2">Diamant 2</option>
+            <option value="Diamant 1">Diamant 1</option>
+          </optgroup>
+          <optgroup label="Master">
+            <option value="Master 5">Master 5</option>
+            <option value="Master 4">Master 4</option>
+            <option value="Master 3">Master 3</option>
+            <option value="Master 2">Master 2</option>
+            <option value="Master 1">Master 1</option>
+          </optgroup>
           <option value="Fragmaster">Fragmaster</option>
         </select>
       </div>
       <div class="flex justify-end gap-4">
-        <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
+        <button type="button" onclick="hideTournamentModal()"
           class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
           Abbrechen
         </button>
@@ -241,27 +204,88 @@
     </div>
   </div>
 
-  <!-- Benutzerliste Modal -->
-  <div id="user-list-modal" class="hidden mt-10">
-    <div
-      class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
-      <div class="mb-4">
-        <input type="text" id="search-user" placeholder="Benutzer suchen..."
-          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
-      </div>
-      <ul id="user-list" class="space-y-4">
-        <!-- Benutzer werden hier dynamisch eingefügt -->
-      </ul>
-      <div class="mt-6 text-center">
-        <button onclick="deleteAllUsers()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-          Alle Benutzer löschen
-        </button>
-      </div>
-    </div>
-  </div>
+  <footer class="mt-12 text-gray-500 text-sm">
+    &copy; 2025 Nextlevel-Network. All rights reserved.
+  </footer>
 
   <script>
+    const serverData = [
+      { id: "1325249120918704168", elementId: "fragpunk-users", teamElementId: "fragpunk-team", team: ["User1", "User2"] },
+      { id: "1314605130342989885", elementId: "marvel-users", teamElementId: "marvel-team", team: ["User3", "User4"] },
+      { id: "1328517357550698576", elementId: "battlefield-users", teamElementId: "battlefield-team", team: ["User5"] },
+      { id: "1327026998534737952", elementId: "mechabreak-users", teamElementId: "mechabreak-team", team: ["User6", "User7"] },
+      { id: "690916074773938236", elementId: "cod-users", teamElementId: "cod-team", team: ["User8"] },
+    ];
+
+    const totalUsersElement = document.getElementById("total-users");
+    let totalUsers = 0;
+
+    serverData.forEach((server) => {
+      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
+        .then((response) => response.json())
+        .then((data) => {
+          const activeUsers = data.presence_count || 0;
+          totalUsers += activeUsers;
+          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
+          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
+
+          // Zeige Teammitglieder an
+          const teamElement = document.getElementById(server.teamElementId);
+          teamElement.textContent = `Team: ${server.team.join(", ")}`;
+        })
+        .catch(() => {
+          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+          const teamElement = document.getElementById(server.teamElementId);
+          teamElement.textContent = "Fehler beim Laden der Teammitglieder";
+        });
+    });
+
+    // Turnier-Anmeldung
+    function showTournamentModal() {
+      document.getElementById("tournament-modal").style.display = "flex";
+    }
+
+    function hideTournamentModal() {
+      document.getElementById("tournament-modal").style.display = "none";
+    }
+
+    document.getElementById("tournament-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const errorMessage = document.getElementById("error-message");
+      const submitButton = event.target.querySelector("button[type='submit']");
+
+      if (localStorage.getItem("tournamentRegistered")) {
+        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
+        errorMessage.classList.remove("hidden");
+        return;
+      }
+
+      const formData = new FormData(event.target);
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Wird gesendet...";
+
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Fehler bei der Anmeldung.");
+          document.getElementById("tournament-modal").style.display = "none";
+          localStorage.setItem("tournamentRegistered", "true");
+          errorMessage.classList.add("hidden");
+        })
+        .catch((error) => {
+          errorMessage.textContent = error.message;
+          errorMessage.classList.remove("hidden");
+        })
+        .finally(() => {
+          submitButton.disabled = false;
+          submitButton.textContent = "Anmelden";
+        });
+    });
+
     // Admin-Login
     function showAdminLogin() {
       document.getElementById("admin-modal").style.display = "flex";
@@ -279,202 +303,11 @@
 
       if (username === "Admin" && password === "1326") {
         hideAdminLogin();
-        loadUserList(); // Benutzerliste laden
-        document.getElementById("user-list-modal").classList.remove("hidden");
+        alert("Erfolgreich eingeloggt!"); // Hier kannst du die Benutzerliste laden
       } else {
         alert("Falscher Benutzername oder Passwort!");
       }
     });
-
-    // Benutzerliste laden
-    function loadUserList() {
-      const userList = document.getElementById("user-list");
-      userList.innerHTML = ""; // Liste zurücksetzen
-
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler beim Abrufen der Benutzerliste.");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (data.length === 0) {
-            const emptyMessage = document.createElement("li");
-            emptyMessage.textContent = "Keine Benutzer gefunden.";
-            emptyMessage.className = "text-gray-400";
-            userList.appendChild(emptyMessage);
-            return;
-          }
-
-          data.forEach((user) => {
-            const listItem = document.createElement("li");
-            listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
-
-            const userInfo = document.createElement("span");
-            userInfo.textContent = `${user.username} (${user.rank})`;
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Löschen";
-            deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
-            deleteButton.onclick = () => deleteUser(user.id);
-
-            listItem.appendChild(userInfo);
-            listItem.appendChild(deleteButton);
-            userList.appendChild(listItem);
-          });
-        })
-        .catch((error) => {
-          const errorItem = document.createElement("li");
-          errorItem.textContent = error.message;
-          errorItem.className = "text-red-500";
-          userList.appendChild(errorItem);
-        });
-    }
-
-    // Benutzer löschen
-    function deleteUser(userId) {
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
-        method: "POST",
-        body: JSON.stringify({ action: "delete", id: userId }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler beim Löschen des Benutzers.");
-          }
-          loadUserList(); // Liste aktualisieren
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
-
-    // Alle Benutzer löschen
-    function deleteAllUsers() {
-      if (!confirm("Möchtest du wirklich alle Benutzer löschen?")) return;
-
-      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
-        method: "POST",
-        body: JSON.stringify({ action: "deleteAll" }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler beim Löschen aller Benutzer.");
-          }
-          loadUserList(); // Liste aktualisieren
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
-
-    // Anmeldung
-    document.getElementById("tournament-form").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const errorMessage = document.getElementById("error-message");
-      const submitButton = event.target.querySelector("button[type='submit']");
-
-      // Überprüfen, ob der Benutzer bereits angemeldet ist
-      if (localStorage.getItem("tournamentRegistered")) {
-        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
-        errorMessage.classList.remove("hidden");
-        return;
-      }
-
-      const formData = new FormData(event.target);
-
-      // Button deaktivieren, um Mehrfachklicks zu verhindern
-      submitButton.disabled = true;
-      submitButton.textContent = "Wird gesendet...";
-
-      fetch(event.target.action, {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler bei der Anmeldung.");
-          }
-          document.getElementById("tournament-modal").style.display = "none"; // Fenster schließen
-          localStorage.setItem("tournamentRegistered", "true"); // Benutzer als registriert markieren
-          errorMessage.classList.add("hidden");
-        })
-        .catch((error) => {
-          errorMessage.textContent = error.message;
-          errorMessage.classList.remove("hidden");
-        })
-        .finally(() => {
-          submitButton.disabled = false;
-          submitButton.textContent = "Anmelden";
-        });
-    });
-
-    // Suchfunktion in der Benutzerliste
-    document.getElementById("search-user").addEventListener("input", function () {
-      const searchValue = this.value.toLowerCase();
-      const userListItems = document.querySelectorAll("#user-list li");
-
-      userListItems.forEach((item) => {
-        const userInfo = item.querySelector("span").textContent.toLowerCase();
-        if (userInfo.includes(searchValue)) {
-          item.style.display = "flex";
-        } else {
-          item.style.display = "none";
-        }
-      });
-    });
-
-    // Discord-User laden
-    const serverData = [
-      { id: "1325249120918704168", elementId: "fragpunk-users" },
-      { id: "1314605130342989885", elementId: "marvel-users" },
-      { id: "1328517357550698576", elementId: "battlefield-users" },
-      { id: "1327026998534737952", elementId: "mechabreak-users" },
-      { id: "690916074773938236", elementId: "cod-users" },
-    ];
-
-    const totalUsersElement = document.getElementById("total-users");
-    let totalUsers = 0;
-
-    serverData.forEach((server) => {
-      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler beim Laden der Nutzer.");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const activeUsers = data.presence_count || 0;
-          totalUsers += activeUsers;
-          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
-          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
-        })
-        .catch(() => {
-          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
-        });
-    });
-
-    function doPost(e) {
-      const { action, id } = JSON.parse(e.postData.contents);
-      const sheet = SpreadsheetApp.openById("DEINE_SPREADSHEET_ID").getSheetByName("Fragpunk Anmeldung");
-
-      if (action === "delete") {
-        sheet.deleteRow(Number(id) + 1); // +1 wegen der Kopfzeile
-        return ContentService.createTextOutput("Benutzer gelöscht.");
-      }
-
-      if (action === "deleteAll") {
-        const lastRow = sheet.getLastRow();
-        if (lastRow > 1) {
-          sheet.deleteRows(2, lastRow - 1); // Alle Zeilen außer der Kopfzeile löschen
-        }
-        return ContentService.createTextOutput("Alle Benutzer gelöscht.");
-      }
-
-      return ContentService.createTextOutput("Ungültige Aktion.");
-    }
   </script>
 </body>
 
