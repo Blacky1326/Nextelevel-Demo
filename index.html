@@ -221,12 +221,23 @@
   <div id="admin-panel" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
     <div class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-red-400">Admin Panel</h2>
-      <button onclick="viewRegisteredUsers()"
+      <button onclick="fetchRegisteredUsers()"
         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full mb-4">
-        Alle angemeldeten Benutzer anzeigen
+        Benutzerliste aktualisieren
       </button>
+      <table id="user-table" class="w-full text-left text-sm text-white border-collapse border border-gray-600">
+        <thead>
+          <tr>
+            <th class="border border-gray-600 px-2 py-1">Name</th>
+            <th class="border border-gray-600 px-2 py-1">Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Benutzer werden hier dynamisch eingefügt -->
+        </tbody>
+      </table>
       <button onclick="deleteAllUsers()"
-        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full">
+        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
         Alle Benutzer löschen
       </button>
       <button onclick="document.getElementById('admin-panel').style.display='none'"
@@ -328,12 +339,25 @@
       }
     }
 
-    function viewRegisteredUsers() {
+    function fetchRegisteredUsers() {
       fetch("https://script.google.com/macros/s/AKfycbwtC36dz-eAUwqAj3eNivLNi9Nhxnzcdvx9fZ4qBjtmD5_UsbKCgY6B9Zb-1SUzm2HtUA/exec")
         .then(response => response.json())
         .then(data => {
           const users = data.users || [];
-          alert("Angemeldete Benutzer:\n" + users.map(user => `Name: ${user.username}, Rank: ${user.rank}`).join("\n"));
+          const userTableBody = document.querySelector("#user-table tbody");
+
+          // Leere die Tabelle
+          userTableBody.innerHTML = "";
+
+          // Füge Benutzer zur Tabelle hinzu
+          users.forEach(user => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td class="border border-gray-600 px-2 py-1">${user.username}</td>
+              <td class="border border-gray-600 px-2 py-1">${user.rank}</td>
+            `;
+            userTableBody.appendChild(row);
+          });
         })
         .catch(() => {
           alert("Fehler beim Abrufen der Benutzer.");
@@ -348,6 +372,7 @@
           .then(response => {
             if (response.ok) {
               alert("Alle Benutzer wurden erfolgreich gelöscht.");
+              fetchRegisteredUsers(); // Aktualisiere die Tabelle
             } else {
               alert("Fehler beim Löschen der Benutzer.");
             }
