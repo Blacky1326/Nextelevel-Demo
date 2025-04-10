@@ -54,16 +54,19 @@
       box-shadow: 0 0 5px #9f4fff;
     }
 
+    /* Hintergrund des Modals */
     #tournament-modal,
     #admin-modal,
     #user-list-modal {
       backdrop-filter: blur(5px);
     }
 
+    /* Formular */
     .bg-gradient-to-br {
       background: linear-gradient(to bottom right, #4c1d95, #000000, #6b21a8);
     }
 
+    /* Eingabefelder */
     input,
     select {
       transition: all 0.3s ease;
@@ -75,6 +78,7 @@
       box-shadow: 0 0 10px #9f4fff;
     }
 
+    /* Buttons */
     button {
       transition: all 0.3s ease;
     }
@@ -141,7 +145,6 @@
     </button>
   </section>
 
-  <!-- Tournament Modal -->
   <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
     <form id="tournament-form"
       action="https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec"
@@ -213,7 +216,7 @@
     </form>
   </div>
 
-  <!-- Admin Login -->
+  <!-- Admin-Login -->
   <section class="mt-10 text-center">
     <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
       Admin Login
@@ -248,7 +251,7 @@
       </div>
     </div>
 
-    <!-- Benutzerliste -->
+    <!-- Benutzerliste (nur sichtbar nach Login) -->
     <div id="user-list-modal" class="hidden mt-10">
       <div
         class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
@@ -272,127 +275,36 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYT9jSvDwlpaT7IvgJkeeXDWTKMzNu6HJRpijwr-cfARpu3FiMKUD7ffqj39Uk5j5x/exec";
+    const serverData = [
+      { id: "1325249120918704168", elementId: "fragpunk-users" },
+      { id: "1314605130342989885", elementId: "marvel-users" },
+      { id: "1328517357550698576", elementId: "battlefield-users" },
+      { id: "1327026998534737952", elementId: "mechabreak-users" },
+      { id: "690916074773938236", elementId: "cod-users" },
+    ];
 
-    function showAdminLogin() {
-      document.getElementById("admin-modal").style.display = "flex";
-    }
+    const totalUsersElement = document.getElementById("total-users");
+    let totalUsers = 0;
 
-    function hideAdminLogin() {
-      document.getElementById("admin-modal").style.display = "none";
-    }
-
-    document.getElementById("admin-login-form").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const username = document.getElementById("admin-username").value;
-      const password = document.getElementById("admin-password").value;
-
-      if (username === "Admin" && password === "1326") {
-        hideAdminLogin();
-        loadUserList();
-        document.getElementById("user-list-modal").classList.remove("hidden");
-      } else {
-        alert("Falscher Benutzername oder Passwort!");
-      }
-    });
-
-    function loadUserList() {
-      fetch(SCRIPT_URL)
+    serverData.forEach((server) => {
+      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
         .then((response) => response.json())
         .then((data) => {
-          const userList = document.getElementById("user-list");
-          userList.innerHTML = "";
-
-          data.forEach((user) => {
-            const listItem = document.createElement("li");
-            listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
-
-            const userInfo = document.createElement("span");
-            userInfo.textContent = `${user.username} (${user.rank})`;
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Löschen";
-            deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
-            deleteButton.onclick = () => {
-              deleteUser(user.id);
-            };
-
-            listItem.appendChild(userInfo);
-            listItem.appendChild(deleteButton);
-            userList.appendChild(listItem);
-          });
+          const activeUsers = data.presence_count || 0;
+          totalUsers += activeUsers;
+          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
+          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
         })
         .catch(() => {
-          alert("Fehler beim Abrufen der Benutzerliste.");
+          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
         });
-    }
-
-    function deleteUser(userId) {
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "delete", id: userId }),
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            // Benutzerliste aktualisieren
-            loadUserList();
-          } else {
-            alert(data.message || "Fehler beim Löschen des Benutzers.");
-          }
-        })
-        .catch(() => {
-          alert("Serverfehler. Bitte später erneut versuchen.");
-        });
-    }
-
-    document.getElementById("delete-all-users").addEventListener("click", function () {
-      if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
-        fetch(SCRIPT_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "deleteAll" }),
-          headers: { "Content-Type": "application/json" },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              alert("Alle Benutzer wurden gelöscht.");
-              loadUserList(); // Benutzerliste aktualisieren
-              localStorage.clear(); // Alle Benutzer aus localStorage löschen
-            } else {
-              alert(data.message || "Fehler beim Löschen der Benutzer.");
-            }
-          })
-          .catch(() => {
-            alert("Serverfehler. Bitte später erneut versuchen.");
-          });
-      }
     });
 
-    function removeFromLocalStorage(username) {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      const updatedUsers = registeredUsers.filter((user) => user !== username);
-      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
-    }
+    const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
+    const tournamentModal = document.getElementById("tournament-modal");
 
-    document.getElementById("search-user").addEventListener("input", function () {
-      const searchValue = this.value.toLowerCase();
-      const userListItems = document.querySelectorAll("#user-list li");
-
-      if (!userListItems.length) {
-        return; // Keine Benutzer in der Liste
-      }
-
-      userListItems.forEach((item) => {
-        const userInfo = item.querySelector("span");
-        if (userInfo && userInfo.textContent.toLowerCase().includes(searchValue)) {
-          item.style.display = "flex";
-        } else {
-          item.style.display = "none";
-        }
-      });
+    tournamentButton.addEventListener("click", () => {
+      tournamentModal.style.display = "flex";
     });
 
     function redirectAfterSubmit(event) {
@@ -440,10 +352,114 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      if (localStorage.getItem("adminLoggedIn")) {
-        loadUserList();
+    function showAdminLogin() {
+      document.getElementById("admin-modal").style.display = "flex";
+    }
+
+    function hideAdminLogin() {
+      document.getElementById("admin-modal").style.display = "none";
+    }
+
+    document.getElementById("admin-login-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("admin-username").value;
+      const password = document.getElementById("admin-password").value;
+
+      if (username === "Admin" && password === "1326") {
+        hideAdminLogin();
+        loadUserList(); // Benutzerliste laden
         document.getElementById("user-list-modal").classList.remove("hidden");
+      } else {
+        const errorMessage = document.createElement("div");
+        errorMessage.textContent = "Falscher Benutzername oder Passwort!";
+        errorMessage.className = "text-red-500 text-sm mt-4";
+        document.getElementById("admin-login-form").appendChild(errorMessage);
+      }
+    });
+
+    function loadUserList() {
+      const userList = document.getElementById("user-list");
+      userList.innerHTML = ""; // Liste zurücksetzen
+
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((user) => {
+            const listItem = document.createElement("li");
+            listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
+
+            const userInfo = document.createElement("span");
+            userInfo.textContent = `${user.username} (${user.rank})`;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Löschen";
+            deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
+            deleteButton.onclick = () => deleteUser(user.id);
+
+            listItem.appendChild(userInfo);
+            listItem.appendChild(deleteButton);
+            userList.appendChild(listItem);
+          });
+        })
+        .catch(() => {
+          const errorItem = document.createElement("li");
+          errorItem.textContent = "Fehler beim Abrufen der Benutzerliste.";
+          errorItem.className = "text-red-500";
+          userList.appendChild(errorItem);
+        });
+    }
+
+    function deleteUser(userId) {
+      fetch(`https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec`, {
+        method: "POST",
+        body: JSON.stringify({ action: "delete", id: userId }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            loadUserList(); // Liste aktualisieren
+          } else {
+            alert("Fehler beim Löschen des Benutzers.");
+          }
+        })
+        .catch(() => {
+          alert("Serverfehler. Bitte später erneut versuchen.");
+        });
+    }
+
+    document.getElementById("search-user").addEventListener("input", function () {
+      const searchValue = this.value.toLowerCase();
+      const userListItems = document.querySelectorAll("#user-list li");
+
+      userListItems.forEach((item) => {
+        const userInfo = item.querySelector("span").textContent.toLowerCase();
+        if (userInfo.includes(searchValue)) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+
+    document.getElementById("delete-all-users").addEventListener("click", function () {
+      if (confirm("Möchtest du wirklich alle Benutzer löschen?")) {
+        fetch("https://script.google.com/macros/s/AKfycbwl46lWC8LDGxGnKiwiJypaTk6_IEwZ-k3RSZIwFGTeKXrbihR5UJYCVa7DIcmsCHUCFg/exec", {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteAll" }),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert(data.message || "Alle Benutzer wurden gelöscht.");
+              loadUserList(); // Benutzerliste aktualisieren
+            } else {
+              alert(data.message || "Fehler beim Löschen der Benutzer.");
+            }
+          })
+          .catch(() => {
+            alert("Serverfehler. Bitte später erneut versuchen.");
+          });
       }
     });
   </script>
