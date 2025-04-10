@@ -54,19 +54,16 @@
       box-shadow: 0 0 5px #9f4fff;
     }
 
-    /* Hintergrund des Modals */
     #tournament-modal,
     #admin-modal,
     #user-list-modal {
       backdrop-filter: blur(5px);
     }
 
-    /* Formular */
     .bg-gradient-to-br {
       background: linear-gradient(to bottom right, #4c1d95, #000000, #6b21a8);
     }
 
-    /* Eingabefelder */
     input,
     select {
       transition: all 0.3s ease;
@@ -78,7 +75,6 @@
       box-shadow: 0 0 10px #9f4fff;
     }
 
-    /* Buttons */
     button {
       transition: all 0.3s ease;
     }
@@ -138,10 +134,16 @@
   </section>
 
   <section class="mt-10 text-center">
-    <!-- Turnier-Anmeldung Button -->
     <button onclick="document.getElementById('tournament-modal').style.display='flex'"
       class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
       Turnier Anmeldung (Fragpunk)
+    </button>
+  </section>
+
+  <!-- Admin-Login Button -->
+  <section class="mt-10 text-center">
+    <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+      Admin Login
     </button>
   </section>
 
@@ -164,43 +166,36 @@
           class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
           required>
           <option value="" disabled selected>Wähle deinen Rang</option>
-          <!-- Bronze -->
           <option value="Bronze 5">Bronze 5</option>
           <option value="Bronze 4">Bronze 4</option>
           <option value="Bronze 3">Bronze 3</option>
           <option value="Bronze 2">Bronze 2</option>
           <option value="Bronze 1">Bronze 1</option>
-          <!-- Silber -->
           <option value="Silber 5">Silber 5</option>
           <option value="Silber 4">Silber 4</option>
           <option value="Silber 3">Silber 3</option>
           <option value="Silber 2">Silber 2</option>
           <option value="Silber 1">Silber 1</option>
-          <!-- Gold -->
           <option value="Gold 5">Gold 5</option>
           <option value="Gold 4">Gold 4</option>
           <option value="Gold 3">Gold 3</option>
           <option value="Gold 2">Gold 2</option>
           <option value="Gold 1">Gold 1</option>
-          <!-- Platin -->
           <option value="Platin 5">Platin 5</option>
           <option value="Platin 4">Platin 4</option>
           <option value="Platin 3">Platin 3</option>
           <option value="Platin 2">Platin 2</option>
           <option value="Platin 1">Platin 1</option>
-          <!-- Diamant -->
           <option value="Diamant 5">Diamant 5</option>
           <option value="Diamant 4">Diamant 4</option>
           <option value="Diamant 3">Diamant 3</option>
           <option value="Diamant 2">Diamant 2</option>
           <option value="Diamant 1">Diamant 1</option>
-          <!-- Master -->
           <option value="Master 5">Master 5</option>
           <option value="Master 4">Master 4</option>
           <option value="Master 3">Master 3</option>
           <option value="Master 2">Master 2</option>
           <option value="Master 1">Master 1</option>
-          <!-- Fragmaster -->
           <option value="Fragmaster">Fragmaster</option>
         </select>
       </div>
@@ -216,139 +211,52 @@
     </form>
   </div>
 
-  <!-- Admin-Login -->
-  <section class="mt-10 text-center">
-    <button onclick="showAdminLogin()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-      Admin Login
-    </button>
-
-    <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
-      <div class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
-        <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Admin Login</h2>
-        <form id="admin-login-form">
-          <div class="mb-6">
-            <label for="admin-username" class="block text-sm font-medium mb-2">Benutzername:</label>
-            <input type="text" id="admin-username" name="admin-username"
-              class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
-              required>
-          </div>
-          <div class="mb-6">
-            <label for="admin-password" class="block text-sm font-medium mb-2">Passwort:</label>
-            <input type="password" id="admin-password" name="admin-password"
-              class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
-              required>
-          </div>
-          <div class="flex justify-end gap-4">
-            <button type="button" onclick="hideAdminLogin()"
-              class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-              Abbrechen
-            </button>
-            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
-              Login
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Benutzerliste (nur sichtbar nach Login) -->
-    <div id="user-list-modal" class="hidden mt-10">
-      <div
-        class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
-        <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
-        <div class="mb-4">
-          <input type="text" id="search-user" placeholder="Benutzer suchen..."
-            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
+  <!-- Admin-Login Modal -->
+  <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 hidden">
+    <div class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl">
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Admin Login</h2>
+      <form id="admin-login-form">
+        <div class="mb-6">
+          <label for="admin-username" class="block text-sm font-medium mb-2">Benutzername:</label>
+          <input type="text" id="admin-username" name="admin-username"
+            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+            required>
         </div>
-        <ul id="user-list" class="space-y-4">
-          <!-- Benutzer werden hier dynamisch eingefügt -->
-        </ul>
-      </div>
+        <div class="mb-6">
+          <label for="admin-password" class="block text-sm font-medium mb-2">Passwort:</label>
+          <input type="password" id="admin-password" name="admin-password"
+            class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500"
+            required>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" onclick="hideAdminLogin()"
+            class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+            Abbrechen
+          </button>
+          <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+            Login
+          </button>
+        </div>
+      </form>
     </div>
-  </section>
+  </div>
 
-  <footer class="mt-12 text-gray-500 text-sm">
-    &copy; 2025 Nextlevel-Network. All rights reserved.
-  </footer>
+  <!-- Benutzerliste Modal -->
+  <div id="user-list-modal" class="hidden mt-10">
+    <div
+      class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
+      <div class="mb-4">
+        <input type="text" id="search-user" placeholder="Benutzer suchen..."
+          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
+      </div>
+      <ul id="user-list" class="space-y-4">
+        <!-- Benutzer werden hier dynamisch eingefügt -->
+      </ul>
+    </div>
+  </div>
 
   <script>
-    const serverData = [
-      { id: "1325249120918704168", elementId: "fragpunk-users" },
-      { id: "1314605130342989885", elementId: "marvel-users" },
-      { id: "1328517357550698576", elementId: "battlefield-users" },
-      { id: "1327026998534737952", elementId: "mechabreak-users" },
-      { id: "690916074773938236", elementId: "cod-users" },
-    ];
-
-    const totalUsersElement = document.getElementById("total-users");
-    let totalUsers = 0;
-
-    serverData.forEach((server) => {
-      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
-        .then((response) => response.json())
-        .then((data) => {
-          const activeUsers = data.presence_count || 0;
-          totalUsers += activeUsers;
-          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
-          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
-        })
-        .catch(() => {
-          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
-        });
-    });
-
-    const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
-    const tournamentModal = document.getElementById("tournament-modal");
-
-    tournamentButton.addEventListener("click", () => {
-      tournamentModal.style.display = "flex";
-    });
-
-    function redirectAfterSubmit(event) {
-      event.preventDefault();
-
-      const errorMessage = document.getElementById("error-message");
-
-      // Überprüfen, ob der Benutzer bereits angemeldet ist
-      if (localStorage.getItem("tournamentRegistered")) {
-        errorMessage.textContent = "Du hast dich bereits für das Turnier angemeldet.";
-        errorMessage.classList.remove("hidden");
-        return;
-      }
-
-      const form = event.target;
-      const formData = new FormData(form);
-
-      const submitButton = form.querySelector("button[type='submit']");
-      submitButton.disabled = true;
-      submitButton.textContent = "Wird gesendet...";
-
-      fetch(form.action, {
-        method: form.method,
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            const tournamentModal = document.getElementById("tournament-modal");
-            tournamentModal.style.display = "none";
-            form.reset();
-            localStorage.setItem("tournamentRegistered", "true");
-            errorMessage.classList.add("hidden"); // Fehlermeldung ausblenden
-          } else {
-            errorMessage.textContent = "Fehler bei der Anmeldung. Bitte versuche es erneut.";
-            errorMessage.classList.remove("hidden");
-          }
-          submitButton.disabled = false;
-          submitButton.textContent = "Anmelden";
-        })
-        .catch(() => {
-          errorMessage.textContent = "Serverfehler. Bitte später erneut versuchen.";
-          errorMessage.classList.remove("hidden");
-          submitButton.disabled = false;
-          submitButton.textContent = "Anmelden";
-        });
-    }
-
     function showAdminLogin() {
       document.getElementById("admin-modal").style.display = "flex";
     }
@@ -368,10 +276,7 @@
         loadUserList(); // Benutzerliste laden
         document.getElementById("user-list-modal").classList.remove("hidden");
       } else {
-        const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Falscher Benutzername oder Passwort!";
-        errorMessage.className = "text-red-500 text-sm mt-4";
-        document.getElementById("admin-login-form").appendChild(errorMessage);
+        alert("Falscher Benutzername oder Passwort!");
       }
     });
 
@@ -408,7 +313,7 @@
     }
 
     function deleteUser(userId) {
-      fetch(`https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec`, {
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
         method: "POST",
         body: JSON.stringify({ action: "delete", id: userId }),
       })
@@ -437,32 +342,6 @@
         }
       });
     });
-
-    const SHEET_ID = "DEINE_SPREADSHEET_ID"; // Ersetze durch die ID deines Google Sheets
-    const SHEET_NAME = "Benutzer"; // Ersetze durch den Namen deines Sheets
-
-    function doGet() {
-      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-      const rows = sheet.getDataRange().getValues();
-      const data = rows.slice(1).map((row, index) => ({
-        id: index + 1,
-        username: row[0],
-        rank: row[1],
-      }));
-      return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
-    }
-
-    function doPost(e) {
-      const { action, id } = JSON.parse(e.postData.contents);
-      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-
-      if (action === "delete") {
-        sheet.deleteRow(Number(id) + 1); // +1 wegen der Kopfzeile
-        return ContentService.createTextOutput("Benutzer gelöscht.");
-      }
-
-      return ContentService.createTextOutput("Ungültige Aktion.");
-    }
   </script>
 </body>
 
