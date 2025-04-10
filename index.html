@@ -204,6 +204,25 @@
     </div>
   </div>
 
+  <div id="user-list-modal" class="hidden mt-10">
+    <div
+      class="bg-gradient-to-br from-purple-900 via-black to-purple-800 text-white p-8 rounded-lg w-96 shadow-2xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-purple-400 text-center">Angemeldete Benutzer</h2>
+      <div class="mb-4">
+        <input type="text" id="search-user" placeholder="Benutzer suchen..."
+          class="w-full border border-purple-500 bg-purple-900 text-white rounded px-4 py-2 focus:ring-2 focus:ring-purple-500">
+      </div>
+      <ul id="user-list" class="space-y-4">
+        <!-- Benutzer werden hier dynamisch eingefügt -->
+      </ul>
+      <div class="mt-6 text-center">
+        <button onclick="deleteAllUsers()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+          Alle Benutzer löschen
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer class="mt-12 text-gray-500 text-sm">
     &copy; 2025 Nextlevel-Network. All rights reserved.
   </footer>
@@ -266,7 +285,7 @@
       submitButton.disabled = true;
       submitButton.textContent = "Wird gesendet...";
 
-      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
         method: "POST",
         body: formData,
       })
@@ -275,6 +294,7 @@
           document.getElementById("tournament-modal").style.display = "none";
           localStorage.setItem("tournamentRegistered", "true");
           errorMessage.classList.add("hidden");
+          document.getElementById("success-message").textContent = "Erfolgreich für das Turnier angemeldet!";
         })
         .catch((error) => {
           errorMessage.textContent = error.message;
@@ -285,6 +305,88 @@
           submitButton.textContent = "Anmelden";
         });
     });
+
+    // Benutzerliste laden
+    function loadUserList() {
+      const userList = document.getElementById("user-list");
+      userList.innerHTML = ""; // Liste zurücksetzen
+
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Abrufen der Benutzerliste.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.length === 0) {
+            const emptyMessage = document.createElement("li");
+            emptyMessage.textContent = "Keine Benutzer gefunden.";
+            emptyMessage.className = "text-gray-400";
+            userList.appendChild(emptyMessage);
+            return;
+          }
+
+          data.forEach((user) => {
+            const listItem = document.createElement("li");
+            listItem.className = "flex justify-between items-center bg-purple-800 p-4 rounded";
+
+            const userInfo = document.createElement("span");
+            userInfo.textContent = `${user.username} (${user.rank})`;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Löschen";
+            deleteButton.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded";
+            deleteButton.onclick = () => deleteUser(user.id);
+
+            listItem.appendChild(userInfo);
+            listItem.appendChild(deleteButton);
+            userList.appendChild(listItem);
+          });
+        })
+        .catch((error) => {
+          const errorItem = document.createElement("li");
+          errorItem.textContent = error.message;
+          errorItem.className = "text-red-500";
+          userList.appendChild(errorItem);
+        });
+    }
+
+    // Benutzer löschen
+    function deleteUser(userId) {
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+        method: "POST",
+        body: JSON.stringify({ action: "delete", id: userId }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Löschen des Benutzers.");
+          }
+          loadUserList(); // Liste aktualisieren
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+
+    // Alle Benutzer löschen
+    function deleteAllUsers() {
+      if (!confirm("Möchtest du wirklich alle Benutzer löschen?")) return;
+
+      fetch("https://script.google.com/macros/s/AKfycbz8qWrY3A_L7Mb8YIhg1dXgsBIEYYVyqxLgKanxSZEu9flVoUZvykkSRWjrS1Ms_Zh6/exec", {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteAll" }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler beim Löschen aller Benutzer.");
+          }
+          loadUserList(); // Liste aktualisieren
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
 
     // Admin-Login
     function showAdminLogin() {
@@ -308,6 +410,26 @@
         alert("Falscher Benutzername oder Passwort!");
       }
     });
+
+    function doPost(e) {
+      const { action, id } = JSON.parse(e.postData.contents);
+      const sheet = SpreadsheetApp.openById("DEINE_SPREADSHEET_ID").getSheetByName("Fragpunk Anmeldung");
+
+      if (action === "delete") {
+        sheet.deleteRow(Number(id) + 1); // +1 wegen der Kopfzeile
+        return ContentService.createTextOutput("Benutzer gelöscht.");
+      }
+
+      if (action === "deleteAll") {
+        const lastRow = sheet.getLastRow();
+        if (lastRow > 1) {
+          sheet.deleteRows(2, lastRow - 1); // Alle Zeilen außer der Kopfzeile löschen
+        }
+        return ContentService.createTextOutput("Alle Benutzer gelöscht.");
+      }
+
+      return ContentService.createTextOutput("Ungültige Aktion.");
+    }
   </script>
 </body>
 
