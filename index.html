@@ -112,268 +112,270 @@
 
   <section class="mt-10 text-center">
     <!-- Turnier-Anmeldung Button -->
-    <button onclick="document.getElementById('tournament-modal').style.display='flex'"
+    <!-- <button onclick="document.getElementById('tournament-modal').style.display='flex'"
       class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
       Turnier Anmeldung (Fragpunk)
     </button>
-  </section>
+  </section> -->
 
-  <section class="mt-10 text-center">
-    <!-- Admin Login Button -->
-    <button onclick="document.getElementById('admin-modal').style.display='flex'"
+    <section class="mt-10 text-center">
+      <!-- Admin Login Button -->
+      <!-- <button onclick="document.getElementById('admin-modal').style.display='flex'"
       class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
       Admin Login
     </button>
-  </section>
+  </section> -->
 
-  <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
-    <form id="tournament-form"
-      action="https://script.google.com/macros/s/AKfycbzZWjXG82BffKJSf1a8Fr8ZnqDRJHIjOudetaTluEx5uCXoa-5Epr7SR-g9FWYWN_C1dQ/exec"
-      method="post" onsubmit="redirectAfterSubmit(event)"
-      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
-      <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
-      <div class="mb-4">
-        <label for="username" class="block text-sm font-medium">Ingame Name:</label>
-        <input type="text" id="username" name="username"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
-          required>
+      <div id="tournament-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+        <form id="tournament-form"
+          action="https://script.google.com/macros/s/AKfycbzZWjXG82BffKJSf1a8Fr8ZnqDRJHIjOudetaTluEx5uCXoa-5Epr7SR-g9FWYWN_C1dQ/exec"
+          method="post" onsubmit="redirectAfterSubmit(event)"
+          class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+          <h2 class="text-xl font-bold mb-4 text-purple-400">Turnier Anmeldung - Fragpunk</h2>
+          <div class="mb-4">
+            <label for="username" class="block text-sm font-medium">Ingame Name:</label>
+            <input type="text" id="username" name="username"
+              class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
+              required>
+          </div>
+          <div class="mb-4">
+            <label for="rank" class="block text-sm font-medium">Rank:</label>
+            <select id="rank" name="rank"
+              class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
+              required>
+              <option value="" disabled selected>Wähle deinen Rang</option>
+              <!-- Bronze -->
+              <option value="Bronze 5">Bronze 5</option>
+              <option value="Bronze 4">Bronze 4</option>
+              <option value="Bronze 3">Bronze 3</option>
+              <option value="Bronze 2">Bronze 2</option>
+              <option value="Bronze 1">Bronze 1</option>
+              <!-- Silber -->
+              <option value="Silber 5">Silber 5</option>
+              <option value="Silber 4">Silber 4</option>
+              <option value="Silber 3">Silber 3</option>
+              <option value="Silber 2">Silber 2</option>
+              <option value="Silber 1">Silber 1</option>
+              <!-- Gold -->
+              <option value="Gold 5">Gold 5</option>
+              <option value="Gold 4">Gold 4</option>
+              <option value="Gold 3">Gold 3</option>
+              <option value="Gold 2">Gold 2</option>
+              <option value="Gold 1">Gold 1</option>
+              <!-- Platin -->
+              <option value="Platin 5">Platin 5</option>
+              <option value="Platin 4">Platin 4</option>
+              <option value="Platin 3">Platin 3</option>
+              <option value="Platin 2">Platin 2</option>
+              <option value="Platin 1">Platin 1</option>
+              <!-- Diamant -->
+              <option value="Diamant 5">Diamant 5</option>
+              <option value="Diamant 4">Diamant 4</option>
+              <option value="Diamant 3">Diamant 3</option>
+              <option value="Diamant 2">Diamant 2</option>
+              <option value="Diamant 1">Diamant 1</option>
+              <!-- Master -->
+              <option value="Master 5">Master 5</option>
+              <option value="Master 4">Master 4</option>
+              <option value="Master 3">Master 3</option>
+              <option value="Master 2">Master 2</option>
+              <option value="Master 1">Master 1</option>
+              <!-- Fragmaster -->
+              <option value="Fragmaster">Fragmaster</option>
+            </select>
+          </div>
+          <div class="flex justify-end gap-4">
+            <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
+              class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+              Abbrechen
+            </button>
+            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+              Anmelden
+            </button>
+          </div>
+        </form>
       </div>
-      <div class="mb-4">
-        <label for="rank" class="block text-sm font-medium">Rank:</label>
-        <select id="rank" name="rank"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-purple-500"
-          required>
-          <option value="" disabled selected>Wähle deinen Rang</option>
-          <!-- Bronze -->
-          <option value="Bronze 5">Bronze 5</option>
-          <option value="Bronze 4">Bronze 4</option>
-          <option value="Bronze 3">Bronze 3</option>
-          <option value="Bronze 2">Bronze 2</option>
-          <option value="Bronze 1">Bronze 1</option>
-          <!-- Silber -->
-          <option value="Silber 5">Silber 5</option>
-          <option value="Silber 4">Silber 4</option>
-          <option value="Silber 3">Silber 3</option>
-          <option value="Silber 2">Silber 2</option>
-          <option value="Silber 1">Silber 1</option>
-          <!-- Gold -->
-          <option value="Gold 5">Gold 5</option>
-          <option value="Gold 4">Gold 4</option>
-          <option value="Gold 3">Gold 3</option>
-          <option value="Gold 2">Gold 2</option>
-          <option value="Gold 1">Gold 1</option>
-          <!-- Platin -->
-          <option value="Platin 5">Platin 5</option>
-          <option value="Platin 4">Platin 4</option>
-          <option value="Platin 3">Platin 3</option>
-          <option value="Platin 2">Platin 2</option>
-          <option value="Platin 1">Platin 1</option>
-          <!-- Diamant -->
-          <option value="Diamant 5">Diamant 5</option>
-          <option value="Diamant 4">Diamant 4</option>
-          <option value="Diamant 3">Diamant 3</option>
-          <option value="Diamant 2">Diamant 2</option>
-          <option value="Diamant 1">Diamant 1</option>
-          <!-- Master -->
-          <option value="Master 5">Master 5</option>
-          <option value="Master 4">Master 4</option>
-          <option value="Master 3">Master 3</option>
-          <option value="Master 2">Master 2</option>
-          <option value="Master 1">Master 1</option>
-          <!-- Fragmaster -->
-          <option value="Fragmaster">Fragmaster</option>
-        </select>
+
+      <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+        <form id="admin-login-form" onsubmit="handleAdminLogin(event)"
+          class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+          <h2 class="text-xl font-bold mb-4 text-red-400">Admin Login</h2>
+          <div class="mb-4">
+            <label for="admin-username" class="block text-sm font-medium">Login Name:</label>
+            <input type="text" id="admin-username" name="admin-username"
+              class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
+              required>
+          </div>
+          <div class="mb-4">
+            <label for="admin-password" class="block text-sm font-medium">Passwort:</label>
+            <input type="password" id="admin-password" name="admin-password"
+              class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
+              required>
+          </div>
+          <div class="flex justify-end gap-4">
+            <button type="button" onclick="document.getElementById('admin-modal').style.display='none'"
+              class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+              Abbrechen
+            </button>
+            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+              Login
+            </button>
+          </div>
+        </form>
       </div>
-      <div class="flex justify-end gap-4">
-        <button type="button" onclick="document.getElementById('tournament-modal').style.display='none'"
-          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-          Abbrechen
-        </button>
-        <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
-          Anmelden
-        </button>
+
+      <div id="admin-panel" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+        <div class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
+          <h2 class="text-xl font-bold mb-4 text-red-400">Admin Panel</h2>
+          <button onclick="fetchRegisteredUsers()"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full mb-4">
+            Benutzerliste aktualisieren
+          </button>
+          <table id="user-table" class="w-full text-left text-sm text-white border-collapse border border-gray-600">
+            <thead>
+              <tr>
+                <th class="border border-gray-600 px-2 py-1">Name</th>
+                <th class="border border-gray-600 px-2 py-1">Rank</th>
+                <th class="border border-gray-600 px-2 py-1">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Benutzer werden hier dynamisch eingefügt -->
+            </tbody>
+          </table>
+          <button onclick="deleteAllUsers()"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
+            Alle Benutzer löschen
+          </button>
+          <button onclick="document.getElementById('admin-panel').style.display='none'"
+            class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
+            Logout
+          </button>
+        </div>
       </div>
-    </form>
-  </div>
 
-  <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
-    <form id="admin-login-form" onsubmit="handleAdminLogin(event)"
-      class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
-      <h2 class="text-xl font-bold mb-4 text-red-400">Admin Login</h2>
-      <div class="mb-4">
-        <label for="admin-username" class="block text-sm font-medium">Login Name:</label>
-        <input type="text" id="admin-username" name="admin-username"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
-          required>
+      <div id="status-message"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white py-2 px-4 rounded hidden"></div>
+      <div id="confirmation-dialog"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+        <div class="bg-gray-800 text-white p-6 rounded-lg w-80">
+          <p id="confirmation-text" class="mb-4"></p>
+          <div class="flex justify-end gap-4">
+            <button id="confirm-yes"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Ja</button>
+            <button id="confirm-no"
+              class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Nein</button>
+          </div>
+        </div>
       </div>
-      <div class="mb-4">
-        <label for="admin-password" class="block text-sm font-medium">Passwort:</label>
-        <input type="password" id="admin-password" name="admin-password"
-          class="w-full border border-gray-600 bg-black bg-opacity-50 text-white rounded px-3 py-2 focus:ring-2 focus:ring-red-500"
-          required>
-      </div>
-      <div class="flex justify-end gap-4">
-        <button type="button" onclick="document.getElementById('admin-modal').style.display='none'"
-          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-          Abbrechen
-        </button>
-        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-          Login
-        </button>
-      </div>
-    </form>
-  </div>
 
-  <div id="admin-panel" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-    <div class="bg-black bg-opacity-80 text-white p-6 rounded-lg w-96 shadow-lg">
-      <h2 class="text-xl font-bold mb-4 text-red-400">Admin Panel</h2>
-      <button onclick="fetchRegisteredUsers()"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full mb-4">
-        Benutzerliste aktualisieren
-      </button>
-      <table id="user-table" class="w-full text-left text-sm text-white border-collapse border border-gray-600">
-        <thead>
-          <tr>
-            <th class="border border-gray-600 px-2 py-1">Name</th>
-            <th class="border border-gray-600 px-2 py-1">Rank</th>
-            <th class="border border-gray-600 px-2 py-1">Aktionen</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Benutzer werden hier dynamisch eingefügt -->
-        </tbody>
-      </table>
-      <button onclick="deleteAllUsers()"
-        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
-        Alle Benutzer löschen
-      </button>
-      <button onclick="document.getElementById('admin-panel').style.display='none'"
-        class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full mt-4">
-        Logout
-      </button>
-    </div>
-  </div>
+      <footer class="mt-12 text-gray-500 text-sm">
+        &copy; 2025 Nextlevel-Network. All rights reserved.
+      </footer>
 
-  <div id="status-message"
-    class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white py-2 px-4 rounded hidden"></div>
-  <div id="confirmation-dialog" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
-    <div class="bg-gray-800 text-white p-6 rounded-lg w-80">
-      <p id="confirmation-text" class="mb-4"></p>
-      <div class="flex justify-end gap-4">
-        <button id="confirm-yes"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Ja</button>
-        <button id="confirm-no" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Nein</button>
-      </div>
-    </div>
-  </div>
+      <script>
+        const serverData = [
+          { id: "1325249120918704168", elementId: "fragpunk-users" },
+          { id: "1314605130342989885", elementId: "marvel-users" },
+          { id: "1328517357550698576", elementId: "battlefield-users" },
+          { id: "1327026998534737952", elementId: "mechabreak-users" },
+          { id: "690916074773938236", elementId: "cod-users" },
+          { id: "1361756456977956974", elementId: "rematch-users" },
+        ];
 
-  <footer class="mt-12 text-gray-500 text-sm">
-    &copy; 2025 Nextlevel-Network. All rights reserved.
-  </footer>
+        const totalUsersElement = document.getElementById("total-users");
+        let totalUsers = 0;
 
-  <script>
-    const serverData = [
-      { id: "1325249120918704168", elementId: "fragpunk-users" },
-      { id: "1314605130342989885", elementId: "marvel-users" },
-      { id: "1328517357550698576", elementId: "battlefield-users" },
-      { id: "1327026998534737952", elementId: "mechabreak-users" },
-      { id: "690916074773938236", elementId: "cod-users" },
-      { id: "1361756456977956974", elementId: "rematch-users" },
-    ];
-
-    const totalUsersElement = document.getElementById("total-users");
-    let totalUsers = 0;
-
-    serverData.forEach((server) => {
-      fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
-        .then((response) => response.json())
-        .then((data) => {
-          const activeUsers = data.presence_count || 0;
-          totalUsers += activeUsers;
-          document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
-          totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
-        })
-        .catch(() => {
-          document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+        serverData.forEach((server) => {
+          fetch(`https://discord.com/api/guilds/${server.id}/widget.json`)
+            .then((response) => response.json())
+            .then((data) => {
+              const activeUsers = data.presence_count || 0;
+              totalUsers += activeUsers;
+              document.getElementById(server.elementId).textContent = `${activeUsers} aktive Nutzer`;
+              totalUsersElement.textContent = `Gesamt aktive Nutzer: ${totalUsers}`;
+            })
+            .catch(() => {
+              document.getElementById(server.elementId).textContent = "Fehler beim Laden der Nutzer";
+            });
         });
-    });
 
-    const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
-    const tournamentModal = document.getElementById("tournament-modal");
+        const tournamentButton = document.querySelector("button[onclick*='tournament-modal']");
+        const tournamentModal = document.getElementById("tournament-modal");
 
-    tournamentButton.addEventListener("click", () => {
-      tournamentModal.style.display = "flex";
-    });
+        tournamentButton.addEventListener("click", () => {
+          tournamentModal.style.display = "flex";
+        });
 
-    function redirectAfterSubmit(event) {
-      // Verhindert das Standardverhalten des Formulars
-      event.preventDefault();
+        function redirectAfterSubmit(event) {
+          // Verhindert das Standardverhalten des Formulars
+          event.preventDefault();
 
-      // Formulardaten absenden
-      const form = event.target;
-      const formData = new FormData(form);
+          // Formulardaten absenden
+          const form = event.target;
+          const formData = new FormData(form);
 
-      // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
-      const submitButton = form.querySelector("button[type='submit']");
-      submitButton.disabled = true;
-      submitButton.textContent = "Wird gesendet...";
+          // Deaktiviere den Submit-Button, um mehrfaches Klicken zu verhindern
+          const submitButton = form.querySelector("button[type='submit']");
+          submitButton.disabled = true;
+          submitButton.textContent = "Wird gesendet...";
 
-      fetch(form.action, {
-        method: form.method,
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            // Erfolgreich: Modal-Fenster schließen
-            const tournamentModal = document.getElementById("tournament-modal");
-            tournamentModal.style.display = "none";
+          fetch(form.action, {
+            method: form.method,
+            body: formData,
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Erfolgreich: Modal-Fenster schließen
+                const tournamentModal = document.getElementById("tournament-modal");
+                tournamentModal.style.display = "none";
 
-            // Formular zurücksetzen
-            form.reset();
+                // Formular zurücksetzen
+                form.reset();
 
-            // Button zurücksetzen
-            submitButton.disabled = false;
-            submitButton.textContent = "Anmelden";
+                // Button zurücksetzen
+                submitButton.disabled = false;
+                submitButton.textContent = "Anmelden";
+              } else {
+                alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
+                submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+                submitButton.textContent = "Anmelden";
+              }
+            })
+            .catch(() => {
+              alert("Serverfehler. Bitte später erneut versuchen.");
+              submitButton.disabled = false; // Reaktiviere den Button bei Fehler
+              submitButton.textContent = "Anmelden";
+            });
+        }
+
+        function handleAdminLogin(event) {
+          event.preventDefault();
+          const username = document.getElementById("admin-username").value;
+          const password = document.getElementById("admin-password").value;
+
+          if (username === "Admin" && password === "1326") {
+            document.getElementById("admin-modal").style.display = "none";
+            document.getElementById("admin-panel").style.display = "flex";
           } else {
-            alert("Fehler bei der Anmeldung. Bitte versuche es erneut.");
-            submitButton.disabled = false; // Reaktiviere den Button bei Fehler
-            submitButton.textContent = "Anmelden";
+            alert("Falscher Login Name oder Passwort!");
           }
-        })
-        .catch(() => {
-          alert("Serverfehler. Bitte später erneut versuchen.");
-          submitButton.disabled = false; // Reaktiviere den Button bei Fehler
-          submitButton.textContent = "Anmelden";
-        });
-    }
+        }
 
-    function handleAdminLogin(event) {
-      event.preventDefault();
-      const username = document.getElementById("admin-username").value;
-      const password = document.getElementById("admin-password").value;
+        function fetchRegisteredUsers() {
+          fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec")
+            .then(response => response.json())
+            .then(data => {
+              const users = data.users || [];
+              const userTableBody = document.querySelector("#user-table tbody");
 
-      if (username === "Admin" && password === "1326") {
-        document.getElementById("admin-modal").style.display = "none";
-        document.getElementById("admin-panel").style.display = "flex";
-      } else {
-        alert("Falscher Login Name oder Passwort!");
-      }
-    }
+              // Leere die Tabelle
+              userTableBody.innerHTML = "";
 
-    function fetchRegisteredUsers() {
-      fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec")
-        .then(response => response.json())
-        .then(data => {
-          const users = data.users || [];
-          const userTableBody = document.querySelector("#user-table tbody");
-
-          // Leere die Tabelle
-          userTableBody.innerHTML = "";
-
-          // Füge Benutzer zur Tabelle hinzu
-          users.forEach(user => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
+              // Füge Benutzer zur Tabelle hinzu
+              users.forEach(user => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
               <td class="border border-gray-600 px-2 py-1">${user.username}</td>
               <td class="border border-gray-600 px-2 py-1">${user.rank}</td>
               <td class="border border-gray-600 px-2 py-1">
@@ -383,154 +385,154 @@
                 </button>
               </td>
             `;
-            userTableBody.appendChild(row);
+                userTableBody.appendChild(row);
+              });
+            })
+            .catch(() => {
+              alert("Fehler beim Abrufen der Benutzer.");
+            });
+        }
+
+        // Funktion zum Anzeigen von Statusmeldungen
+        function showStatusMessage(message, isError = false) {
+          const statusMessage = document.getElementById("status-message");
+          statusMessage.textContent = message;
+          statusMessage.classList.remove("hidden", "bg-red-500", "bg-green-500");
+          statusMessage.classList.add(isError ? "bg-red-500" : "bg-green-500");
+
+          // Blende die Nachricht nach 3 Sekunden aus
+          setTimeout(() => {
+            statusMessage.classList.add("hidden");
+          }, 3000);
+        }
+
+        // Funktion zum Anzeigen eines Bestätigungsdialogs
+        function showConfirmationDialog(message, onConfirm) {
+          const confirmationDialog = document.getElementById("confirmation-dialog");
+          const confirmationText = document.getElementById("confirmation-text");
+          const confirmYes = document.getElementById("confirm-yes");
+          const confirmNo = document.getElementById("confirm-no");
+
+          confirmationText.textContent = message;
+          confirmationDialog.classList.remove("hidden");
+
+          // Event-Listener für Ja und Nein
+          confirmYes.onclick = () => {
+            confirmationDialog.classList.add("hidden");
+            onConfirm(true);
+          };
+          confirmNo.onclick = () => {
+            confirmationDialog.classList.add("hidden");
+            onConfirm(false);
+          };
+        }
+
+        // Aktualisierte deleteAllUsers-Funktion
+        function deleteAllUsers() {
+          showConfirmationDialog("Möchten Sie wirklich alle Benutzer löschen?", (confirmed) => {
+            if (confirmed) {
+              fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                  action: "deleteAllUsers",
+                }),
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.status === "success") {
+                    showStatusMessage("Alle Benutzer wurden erfolgreich gelöscht.");
+                    fetchRegisteredUsers(); // Aktualisiere die Tabelle
+                  } else {
+                    showStatusMessage(`Fehler: ${data.message}`, true);
+                  }
+                })
+                .catch(() => {
+                  showStatusMessage("Serverfehler. Bitte später erneut versuchen.", true);
+                });
+            }
           });
-        })
-        .catch(() => {
-          alert("Fehler beim Abrufen der Benutzer.");
-        });
-    }
-
-    // Funktion zum Anzeigen von Statusmeldungen
-    function showStatusMessage(message, isError = false) {
-      const statusMessage = document.getElementById("status-message");
-      statusMessage.textContent = message;
-      statusMessage.classList.remove("hidden", "bg-red-500", "bg-green-500");
-      statusMessage.classList.add(isError ? "bg-red-500" : "bg-green-500");
-
-      // Blende die Nachricht nach 3 Sekunden aus
-      setTimeout(() => {
-        statusMessage.classList.add("hidden");
-      }, 3000);
-    }
-
-    // Funktion zum Anzeigen eines Bestätigungsdialogs
-    function showConfirmationDialog(message, onConfirm) {
-      const confirmationDialog = document.getElementById("confirmation-dialog");
-      const confirmationText = document.getElementById("confirmation-text");
-      const confirmYes = document.getElementById("confirm-yes");
-      const confirmNo = document.getElementById("confirm-no");
-
-      confirmationText.textContent = message;
-      confirmationDialog.classList.remove("hidden");
-
-      // Event-Listener für Ja und Nein
-      confirmYes.onclick = () => {
-        confirmationDialog.classList.add("hidden");
-        onConfirm(true);
-      };
-      confirmNo.onclick = () => {
-        confirmationDialog.classList.add("hidden");
-        onConfirm(false);
-      };
-    }
-
-    // Aktualisierte deleteAllUsers-Funktion
-    function deleteAllUsers() {
-      showConfirmationDialog("Möchten Sie wirklich alle Benutzer löschen?", (confirmed) => {
-        if (confirmed) {
-          fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              action: "deleteAllUsers",
-            }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.status === "success") {
-                showStatusMessage("Alle Benutzer wurden erfolgreich gelöscht.");
-                fetchRegisteredUsers(); // Aktualisiere die Tabelle
-              } else {
-                showStatusMessage(`Fehler: ${data.message}`, true);
-              }
-            })
-            .catch(() => {
-              showStatusMessage("Serverfehler. Bitte später erneut versuchen.", true);
-            });
         }
-      });
-    }
 
-    // Aktualisierte deleteUser-Funktion
-    function deleteUser(username) {
-      showConfirmationDialog(`Möchten Sie den Benutzer "${username}" wirklich löschen?`, (confirmed) => {
-        if (confirmed) {
-          fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              action: "deleteUser",
-              username: username,
-            }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.status === "success") {
-                showStatusMessage("Benutzer wurde erfolgreich gelöscht.");
-                fetchRegisteredUsers(); // Aktualisiere die Tabelle
-              } else {
-                showStatusMessage(`Fehler: ${data.message}`, true);
-              }
-            })
-            .catch(() => {
-              showStatusMessage("Serverfehler. Bitte später erneut versuchen.", true);
-            });
+        // Aktualisierte deleteUser-Funktion
+        function deleteUser(username) {
+          showConfirmationDialog(`Möchten Sie den Benutzer "${username}" wirklich löschen?`, (confirmed) => {
+            if (confirmed) {
+              fetch("https://script.google.com/macros/s/AKfycbxl8kuFWx5x20ftRfzxMRtrPu4nVAVGQCOBJsSWjptAYsUrTZ-PCqtIEjPcSjpIoCn2/exec", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                  action: "deleteUser",
+                  username: username,
+                }),
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.status === "success") {
+                    showStatusMessage("Benutzer wurde erfolgreich gelöscht.");
+                    fetchRegisteredUsers(); // Aktualisiere die Tabelle
+                  } else {
+                    showStatusMessage(`Fehler: ${data.message}`, true);
+                  }
+                })
+                .catch(() => {
+                  showStatusMessage("Serverfehler. Bitte später erneut versuchen.", true);
+                });
+            }
+          });
         }
-      });
-    }
 
-    // Funktion zur Überprüfung, ob der Benutzer bereits registriert ist
-    function checkIfUserRegistered(username) {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      // Überprüfen, ob der Benutzername bereits existiert (Groß-/Kleinschreibung beachten)
-      return registeredUsers.some(user => user.username.toLowerCase() === username.toLowerCase());
-    }
+        // Funktion zur Überprüfung, ob der Benutzer bereits registriert ist
+        function checkIfUserRegistered(username) {
+          const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+          // Überprüfen, ob der Benutzername bereits existiert (Groß-/Kleinschreibung beachten)
+          return registeredUsers.some(user => user.username.toLowerCase() === username.toLowerCase());
+        }
 
-    // Funktion zur Registrierung eines Benutzers
-    function registerUser(event) {
-      event.preventDefault();
+        // Funktion zur Registrierung eines Benutzers
+        function registerUser(event) {
+          event.preventDefault();
 
-      const username = document.getElementById("username").value.trim();
-      const rank = document.getElementById("rank").value;
+          const username = document.getElementById("username").value.trim();
+          const rank = document.getElementById("rank").value;
 
-      if (!username || !rank) {
-        showStatusMessage("Bitte alle Felder ausfüllen!", true);
-        return;
-      }
+          if (!username || !rank) {
+            showStatusMessage("Bitte alle Felder ausfüllen!", true);
+            return;
+          }
 
-      if (checkIfUserRegistered(username)) {
-        const messageElement = document.getElementById("registration-message");
-        messageElement.textContent = "Du bist bereits registriert!";
-        messageElement.classList.remove("hidden");
-        return;
-      }
+          if (checkIfUserRegistered(username)) {
+            const messageElement = document.getElementById("registration-message");
+            messageElement.textContent = "Du bist bereits registriert!";
+            messageElement.classList.remove("hidden");
+            return;
+          }
 
-      // Benutzer in localStorage speichern
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      registeredUsers.push({ username, rank });
-      localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+          // Benutzer in localStorage speichern
+          const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+          registeredUsers.push({ username, rank });
+          localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
 
-      const messageElement = document.getElementById("registration-message");
-      messageElement.textContent = "Erfolgreich registriert!";
-      messageElement.classList.remove("hidden");
+          const messageElement = document.getElementById("registration-message");
+          messageElement.textContent = "Erfolgreich registriert!";
+          messageElement.classList.remove("hidden");
 
-      document.getElementById("tournament-form").reset();
-      updateUserTable(); // Aktualisiere die Benutzerliste
-    }
+          document.getElementById("tournament-form").reset();
+          updateUserTable(); // Aktualisiere die Benutzerliste
+        }
 
-    // Funktion zum Aktualisieren der Benutzerliste im Admin-Panel
-    function updateUserTable() {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      const userTableBody = document.querySelector("#user-table tbody");
+        // Funktion zum Aktualisieren der Benutzerliste im Admin-Panel
+        function updateUserTable() {
+          const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+          const userTableBody = document.querySelector("#user-table tbody");
 
-      // Leere die Tabelle
-      userTableBody.innerHTML = "";
+          // Leere die Tabelle
+          userTableBody.innerHTML = "";
 
-      // Füge Benutzer zur Tabelle hinzu
-      registeredUsers.forEach(user => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
+          // Füge Benutzer zur Tabelle hinzu
+          registeredUsers.forEach(user => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
           <td class="border border-gray-600 px-2 py-1">${user.username}</td>
           <td class="border border-gray-600 px-2 py-1">${user.rank}</td>
           <td class="border border-gray-600 px-2 py-1">
@@ -540,19 +542,19 @@
             </button>
           </td>
         `;
-        userTableBody.appendChild(row);
-      });
-    }
+            userTableBody.appendChild(row);
+          });
+        }
 
-    // Event-Listener für das Registrierungsformular
-    document.getElementById("tournament-form").addEventListener("submit", registerUser);
+        // Event-Listener für das Registrierungsformular
+        document.getElementById("tournament-form").addEventListener("submit", registerUser);
 
-    // Initialisiere die Benutzerliste beim Laden der Seite
-    document.addEventListener("DOMContentLoaded", updateUserTable);
-  </script>
+        // Initialisiere die Benutzerliste beim Laden der Seite
+        document.addEventListener("DOMContentLoaded", updateUserTable);
+      </script>
 
-  <!-- Nachricht für den Benutzer -->
-  <div id="registration-message" class="text-center text-red-500 font-bold hidden"></div>
+      <!-- Nachricht für den Benutzer -->
+      <div id="registration-message" class="text-center text-red-500 font-bold hidden"></div>
 </body>
 
 </html>
